@@ -1,0 +1,167 @@
+<div class="core-control-container">
+    <div [formGroup]="form" [class.hidden]="!!control.hidden">
+
+        <!-- START: LABEL SESSION-->
+        <label [class]="'control-label' +  (required ? ' required' : '')" [attr.for]="control.field"
+            [class.avatar-label]="control.uploadFileType==='IMAGE_AVATAR'" [appTooltip]="control.tooltip! | translate: lang" [ngStyle]="{
+                display: 'inline-block'
+            }">
+            {{control.controlType!=='CHECKBOX' ? (control.label | translate: lang) : ''}}
+        </label>
+        <i *ngIf="!!control.hint! && control.controlType !== 'CHECKBOX'" class="feather-help-circle" [appTooltip]="control.hint!" [ngStyle]="{
+            display: 'inline-block',
+            marginLeft: '2px'
+        }"></i>
+        <!-- START: LABEL SESSION-->
+
+        <!-- START: FORM-CONTROL SESSION-->
+
+        <ng-container *ngIf="control.controlType==='TEXTBOX'">
+            <input *ngIf="control.type==='date'" [formControlName]="control.field" [type]="control.type"
+                class="form-control" [readonly]="control.readonly!" useValueAsDate>
+
+            <input *ngIf="control.type==='number'" [formControlName]="control.field" [type]="control.type"
+                class="form-control" [readonly]="control.readonly" [step]="control.step || '1'">
+
+            <input *ngIf="control.type!=='date' && control.type!=='number'" [formControlName]="control.field"
+                [value]="form.get(control.field)?.value | tableCell: control.pipe : lang" [type]="control.type"
+                class="form-control" [readonly]="control.readonly"
+                [appTooltip]="form.get(control.field)?.value"
+                (focus)="onFocus($event)"
+                (blur)="onBlur($event)"
+                >
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='CURRENCY'">
+            <core-currency-input [formControlName]="control.field"></core-currency-input>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='TEXTAREA'">
+            <textarea [rows]="control.textareaRows?.toString() || '3'" [ngStyle]="{ height: 'unset' }"
+                [formControlName]="control.field" class="form-control" [readonly]="control.readonly"></textarea>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='CHECKBOX'">
+            <core-checkbox [formControlName]="control.field" [text]="control.label"
+                [inputValue]="control.value"></core-checkbox>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='MCC'">
+            <core-mcc [formControlName]="control.field" [columns]="control.columns!" [shownFrom]="control.shownFrom!" 
+            [apiDefinition]="control.apiDefinition!" [getByIdApi]="control.getByIdApi!" [selectedRow$]="control.selectedRow$!"
+            [outerParam$]="control.outerParam$!"
+            ></core-mcc>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='DATEPICKER'">
+            <core-date-picker [formControlName]="control.field" [rangeLimit]="control.rangeLimit!"></core-date-picker>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='DROPDOWN' && !!control.dropdownOptions$">
+            <core-dropdown [formControlName]="control.field" [options$]="control.dropdownOptions$!"
+                [getByIdObject$]="control.getByIdObject$!" [shownFrom]="control.shownFrom!"></core-dropdown>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='LIST'">
+            <core-list [formControlName]="control.field" [options]="control.listOptions!"></core-list>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='CHECKLIST' && !!control.checklistOptions$">
+            <core-checklist [formControlName]="control.field" [options$]="control.checklistOptions$!"
+                [getByIdObject$]="control.getByIdObject$!" [shownFrom]="control.shownFrom!"></core-checklist>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='SEEKER' && !!control.seekerSourceType">
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='EMPLOYEE_SEEK'"
+                [multiMode]="control.multiMode!" [objectList$]="control.objectList$!" [formControlName]="control.field"
+                [seekerSourceType]="control.seekerSourceType!" [preDefinedOuterParam$]="control.preDefinedOuterParam$!"
+                [boundFrom]="control.boundFrom!" [shownFrom]="control.shownFrom!" [alsoBindTo]="control.alsoBindTo!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='CONTRACT_SEEK'"
+                [multiMode]="control.multiMode!" [objectList$]="control.objectList$!" [formControlName]="control.field"
+                [seekerSourceType]="control.seekerSourceType!" [boundFrom]="control.boundFrom!"
+                [preDefinedOuterParam$]="control.preDefinedOuterParam$!" [shownFrom]="control.shownFrom!"
+                [alsoBindTo]="control.alsoBindTo!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='WORKING_SEEK'" [multiMode]="control.multiMode!"
+                [objectList$]="control.objectList$!" [formControlName]="control.field"
+                [seekerSourceType]="control.seekerSourceType!" [preDefinedOuterParam$]="control.preDefinedOuterParam$!"
+                [boundFrom]="control.boundFrom!" [shownFrom]="control.shownFrom!" [alsoBindTo]="control.alsoBindTo!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='WAGE_SEEK'" [formControlName]="control.field"
+                [multiMode]="control.multiMode!" [objectList$]="control.objectList$!"
+                [seekerSourceType]="control.seekerSourceType!" [preDefinedOuterParam$]="control.preDefinedOuterParam$!"
+                [boundFrom]="control.boundFrom!" [shownFrom]="control.shownFrom!" [alsoBindTo]="control.alsoBindTo!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='POSITION_SEEK'" [objectList$]="control.objectList$!"
+                [multiMode]="control.multiMode!" [formControlName]="control.field" [alsoBindTo]="control.alsoBindTo!"
+                [seekerSourceType]="control.seekerSourceType!" [preDefinedOuterParam$]="control.preDefinedOuterParam$!"
+                [boundFrom]="control.boundFrom!" [shownFrom]="control.shownFrom!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='POSITION_CONCURRENT_SEEK'"
+                [multiMode]="control.multiMode!" [formControlName]="control.field" [alsoBindTo]="control.alsoBindTo!"
+                [seekerSourceType]="control.seekerSourceType!" [preDefinedOuterParam$]="control.preDefinedOuterParam$!"
+                [boundFrom]="control.boundFrom!" [shownFrom]="control.shownFrom!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+
+            <core-form-control-seeker *ngIf="control.seekerSourceType==='ORGANIZATION_UNIT_SEEK'"
+                [formControlName]="control.field" [seekerSourceType]="control.seekerSourceType!"
+                [boundFrom]="control.boundFrom!" [alsoBindTo]="control.alsoBindTo!" [shownFrom]="control.shownFrom!"
+                [getByIdObject$]="control.getByIdObject$!"></core-form-control-seeker>
+
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='FILEUPLOADER' && !!control.uploadFileType">
+            <core-file-uploader [formControlName]="control.field" [uploadFileType]="control.uploadFileType"
+                [fileDataControlName]="control.fileDataControlName!"
+                [fileNameControlName]="control.fileNameControlName!"
+                [fileTypeControlName]="control.fileTypeControlName!"
+                [verticalMode]="control.verticalMode!"></core-file-uploader>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='ATTACHMENT'">
+            <core-attachment [formControlName]="control.field" [assignTo]="control.assignTo!"
+                [valueToShow]="control.valueToShow!"></core-attachment>
+        </ng-container>
+
+        <ng-container
+            *ngIf="control.controlType==='GRIDBUFFER' && !!control.gridBufferFormSections && !!control.gridBufferTableColumns">
+            <core-grid-buffer [formControlName]="control.field" [formSections]="control.gridBufferFormSections"
+                [gridColumns]="control.gridBufferTableColumns"
+                (onBufferFormCreated)="!!control.onBufferFormCreated ? control.onBufferFormCreated($event) : null"></core-grid-buffer>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='ORGTREECHECK'">
+            <core-org-tree [formControlName]="control.field"
+                [accessorMode]="coreOrgTreeDefaultAccessorMode"></core-org-tree>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='RADIOGROUP'">
+            <core-radio-group [formControlName]="control.field"
+                [options$]="control.radioGroupOptions$!"
+                [vertical]="control.verticalMode!"
+                ></core-radio-group>
+        </ng-container>
+
+        <ng-container *ngIf="control.controlType==='MONTHSELECTOR'">
+            <core-month-selector [formControlName]="control.field"
+                ></core-month-selector>
+        </ng-container>
+
+        <!-- END: FORM-CONTROL SESSION-->
+
+        <!-- START: ERROR SESSION-->
+        <div *ngIf="!!errors!.length">
+            <div class="form-control-error" *ngFor="let error of errors">
+                {{ error.errorMessage | translate: lang }}
+            </div>
+        </div>
+        <div *ngIf="!!!errors!.length && !!checkError$.value">
+            <div>
+                {{ '&nbsp;' }}
+            </div>
+        </div>
+        <!-- END: ERROR SESSION-->
+
+    </div>
+</div>

@@ -1,0 +1,832 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Hồ sơ <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i>Nghiệp
+            vụ
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/profile/business/staffprofile'>Phê duyệt Thông tin hồ sơ</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="staffprofile-change-edit" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+    <div class="card-md">
+      <div class="row">
+        <div id="img-card">
+          <div class="group-box">
+            <ejs-tooltip content='Chọn ảnh' target="#target">
+              <div id="target" onclick="javascript:document.getElementById('avatar').click();">
+                <img *ngIf="!model.avatar"
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  class="img-avatar" />
+                <img *ngIf="model.avatar" [src]='model.avatar' class="img-avatar" style="object-fit: cover;" />
+              </div>
+            </ejs-tooltip>
+           
+            <div class="emp-info">
+              <div>
+                <label class="fullname"><a class="link-history" >{{model.fullname}}</a></label>
+              </div>
+              <div>
+                <p>{{model.positionName}}</p>
+              </div>
+              <hr>
+              <div>
+                <p class="email"><i class="fa fa-envelope-o" style="color: #737373;"></i><span
+                    style="color: #1d9bf0; padding-left: 10px;">{{model.workEmail}}</span>
+                </p>
+              </div>
+              <div>
+                <p><i class="fa fa-phone" style="color: #737373;"></i>
+                  <span style="color: #1d9bf0; padding-left: 10px;">{{model.mobilePhone}}</span>
+                </p>
+              </div>
+              <hr>
+              <div>
+                <p style="color: #737373;">Phòng ban</p>
+                <p>{{model.orgName}}</p>
+              </div>
+              <div>
+                <p style="color: #737373;">Người quản lý</p>
+                <p>{{model.orgManager}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-sm-9 offset-3">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a (click)="changeTab(1)" class="nav-link active" data-toggle="tab" href="#home">Sơ yếu
+                lý
+                lịch</a>
+            </li>
+            <li class="nav-item">
+              <a (click)="changeTab(2)" class="nav-link" data-toggle="tab" href="#profile">Thông tin
+                phụ</a>
+            </li>
+            <li class="nav-item">
+              <a (click)="changeTab(3)" class="nav-link" data-toggle="tab" href="#education">Trình độ
+                văn hóa</a>
+            </li>
+            <li class="nav-item">
+              <a (click)="changeTab(4)" class="nav-link" data-toggle="tab" href="#user">TK ngân hàng</a>
+            </li>                     
+          </ul>
+          <form name="editForm" [formGroup]="editForm" novalidate>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- Thông tin hiên tại -->
+                <div class="group-box" formGroupName="currentinfor">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Thông tin hiện tại</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Mã nhân viên</label>
+                        <input type="text" class="form-control" formControlName="code" [(ngModel)]="model.code" readonly>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Họ và tên đệm</label>
+                        <input type="text" class="form-control" formControlName="firstName"
+                          [(ngModel)]="model.firstName" (ngModelChange)="changeName()" readonly>
+                       
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Tên</label>
+                        <input type="text" class="form-control" formControlName="lastName" [(ngModel)]="model.lastName"
+                          (ngModelChange)="changeName()" readonly>                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- Phòng ban -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical-flex">
+                        <label class="e-float-text required">Phòng
+                          ban</label>
+                        <input formControlName="orgId" [(ngModel)]="model.orgName" type="text" class="form-control"
+                          readonly>
+                      </div>
+                    </div>
+
+                    <!--Chức vụ  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical-flex">
+                        <label class="e-float-text required">Vị trí công việc</label>
+                        <input formControlName="orgId" [(ngModel)]="model.positionName" type="text" class="form-control"
+                          readonly>
+                      </div>
+                    </div>               
+                  </div>                  
+                </div>
+                <!--- Thông tin cá nhân -->
+                <div class="group-box" formGroupName="infor">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Thông tin cá nhân</label>
+                  </div>
+                  <!--  -->
+                  <div class="row">
+                    <!--Ngày sinh  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày sinh</label>
+                        <ejs-datepicker id="birthDate" format="dd/MM/yyyy" [(ngModel)]="model.birthDate"
+                          (keydown)="changeDate('birthDate')" (blur)="changeDate('birthDate')"
+                          formControlName="birthDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['infor'].get('birthDate')!.hasError('') && !editForm.controls['infor'].get('birthDate')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['infor'].get('birthDate')!.hasError('incorrect') && !editForm.controls['infor'].get('birthDate')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!--Giới tính  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Giới
+                          tính</label>
+                        <ejs-dropdownlist id='genderId' [dataSource]='lstGenderId' formControlName="genderId"
+                          [showClearButton]="true" [(ngModel)]="model.genderId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstGenderId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['infor'].get('genderId')!.hasError('') && !editForm.controls['infor'].get('genderId')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Nơi sinh -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Nơi sinh</label>
+                        <input type="text" class="form-control" formControlName="birthPlace"
+                          [(ngModel)]="model.birthPlace">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- CMNN/TCC -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Số CMND/Căn cước</label>
+                        <input type="text" class="form-control" formControlName="idNo" [(ngModel)]="model.idNo"
+                          maxlength="12">
+                      </div>
+                    </div>
+                    <!--Ngày cấp  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày cấp</label>
+                        <ejs-datepicker id="idDate" format="dd/MM/yyyy" [(ngModel)]="model.idDate"
+                          (keydown)="changeDate('idDate')" (blur)="changeDate('idDate')" formControlName="idDate"
+                          placeholder=".../.../...">
+                        </ejs-datepicker>
+                      </div>
+                    </div>
+                    <!-- Nơi cấp-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Nơi cấp</label>
+                        <input class="form-control" type="text" class="form-control" formControlName="idPlace"
+                          [(ngModel)]="model.idPlace">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!--Quốc tịch  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Quốc tịch</label>
+                        <ejs-dropdownlist id='nationalityId' [dataSource]='lstNationalityId'
+                          formControlName="nationalityId" [showClearButton]="true" [(ngModel)]="model.nationalityId"
+                          [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstNationalityId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Dân tộc  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Dân tộc</label>
+                        <ejs-dropdownlist id='nativeId' [dataSource]='lstNativeId' formControlName="nativeId"
+                          [showClearButton]="true" [(ngModel)]="model.nativeId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstNativeId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Tôn giáo  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Tôn giáo</label>
+                        <ejs-dropdownlist id='religionId' [dataSource]='lstReligionId' formControlName="religionId"
+                          [showClearButton]="true" [(ngModel)]="model.religionId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstReligionId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!--Tình trạng hôn nhân  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Tình trạng hôn
+                          nhân</label>
+                        <ejs-dropdownlist id='maritalStatusId' [dataSource]='lstMaritalStatusId'
+                          formControlName="maritalStatusId" [showClearButton]="true" [(ngModel)]="model.maritalStatusId"
+                          [fields]='fields' [allowFiltering]='true'
+                          (filtering)='onFiltering($event,lstMaritalStatusId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Thưởng trú tại việt nam -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Đối tượng cư trú</label>
+                        <ejs-dropdownlist id='resident' [dataSource]='lstResident' formControlName="resident"
+                          [showClearButton]="true" [(ngModel)]="model.residentId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstResident)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Địa chỉ -->
+                <div class="group-box" formGroupName="address">
+                  <div class="card-head">
+                    <div class="icon-round histaff-icon">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <label class="title">Địa chỉ thường trú</label>
+                  </div>
+                  <div class="row">
+                    <!--Tỉnh/TP  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Tỉnh/TP</label>
+                        <ejs-dropdownlist id='provinceId' [dataSource]='lstProvinceId' formControlName="provinceId"
+                          [showClearButton]="true" [(ngModel)]="model.provinceId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstProvinceId)'
+                          (change)="changeProvince($event!)">
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Quận huyện  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Quận/Huyện</label>
+                        <ejs-dropdownlist id='districtId' [dataSource]='lstDistrictId' formControlName="districtId"
+                          [showClearButton]="true" [(ngModel)]="model.districtId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstDistrictId)'
+                          (change)="changeDistrict($event!)">
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Xã/Phường  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Xã/Phường</label>
+                        <ejs-dropdownlist id='wardId' [dataSource]='lstWardId' formControlName="wardId"
+                          [showClearButton]="true" [(ngModel)]="model.wardId" [fields]='fields' [allowFiltering]='true'
+                          (filtering)='onFiltering($event,lstWardId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Số nhà, đường phố, thôn xóm</label>
+                        <input type="text" class="form-control" formControlName="address" [(ngModel)]="model.address">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Địa chỉ hiện tại-->
+                <div class="group-box" formGroupName="curAddress">
+                  <div class="card-head">
+                    <div class="icon-round histaff-icon">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <label class="title">Địa chỉ hiện tại</label>
+                    <button class="btn-coppy" title="Sao chép địa chỉ thường trú" (click)="coppyAddress()"> <i
+                        class="fa fa-download" aria-hidden="true"></i></button>
+
+                  </div>
+                  <div class="row">
+                    <!--Tỉnh/TP  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Tỉnh/TP</label>
+                        <ejs-dropdownlist id='curProvinceId' [dataSource]='lstCurProvinceId'
+                          formControlName="curProvinceId" [showClearButton]="true" [(ngModel)]="model.curProvinceId"
+                          [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstCurProvinceId)'
+                          (change)="changeCurProvince($event!)">
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Quận huyện  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Quận/Huyện</label>
+                        <ejs-dropdownlist id='curDistrictId' [dataSource]='lstCurDistrictId'
+                          formControlName="curDistrictId" [showClearButton]="true" [(ngModel)]="model.curDistrictId"
+                          [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstCurDistrictId)'
+                          (change)="changeCurDistrict($event!)">
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                    <!--Xã/Phường  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Xã/Phường</label>
+                        <ejs-dropdownlist id='curWardId' [dataSource]='lstCurWardId' formControlName="curWardId"
+                          [showClearButton]="true" [(ngModel)]="model.curWardId" [fields]='fields'
+                          [allowFiltering]='true' (filtering)='onFiltering($event,lstCurWardId)'>
+                        </ejs-dropdownlist>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Số nhà, đường phố, thôn xóm</label>
+                        <input type="text" class="form-control" formControlName="curAddress"
+                          [(ngModel)]="model.curAddress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Thông tin liên hệ -->
+                <div class="group-box" formGroupName="contact">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Thông tin liên hệ</label>
+                  </div>
+                  <div class="row">
+                    <!-- Điện thoại di động-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Điện thoại cá nhân</label>
+                        <input type="text" class="form-control" formControlName="mobilePhone"
+                          [(ngModel)]="model.mobilePhone" maxlength="50">
+                      </div>
+                    </div>
+                    <!-- Email cá nhân-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Email cá nhân</label>
+                        <input type="text" class="form-control" formControlName="email" [(ngModel)]="model.email">
+                      </div>
+                    </div>
+                    <!-- Email công ty-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Email công
+                          ty</label>
+                        <input type="text" class="form-control" formControlName="workEmail"
+                          [(ngModel)]="model.workEmail">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- Người liên hệ khi cần-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <input type="text" class="form-control" formControlName="contactPer"
+                          [(ngModel)]="model.contactPer">
+                        <label class="e-float-text">Người liên hệ khi
+                          cần</label>
+                      </div>
+                    </div>
+                    <!-- Số điện thoại người liên hệ-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <input type="text" class="form-control" formControlName="contactPerPhone"
+                          [(ngModel)]="model.contactPerPhone">
+                        <label class="e-float-text">Số
+                          điện thoại người liên hệ</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"
+                formGroupName="addinfo">
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Hộ chiếu</label>
+                  </div>
+                  <div class="row">
+                    <!-- Hộ chiếu-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Số hộ chiếu</label>
+                        <input type="text" formControlName="passNo" class="form-control" [(ngModel)]="model.passNo">
+                      </div>
+                    </div>
+                    <!--Ngày cấp -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text">Ngày cấp</label>
+                        <ejs-datepicker id="passDate" format="dd/MM/yyyy" [(ngModel)]="model.passDate"
+                          (keydown)="changeDate('passDate')" (blur)="changeDate('passDate')" formControlName="passDate"
+                          placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('passDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('passDate')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày hết hạn -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <ejs-datepicker id="passExpire" format="dd/MM/yyyy" [(ngModel)]="model.passExpire"
+                          (keydown)="changeDate('passExpire')" (blur)="changeDate('passExpire')"
+                          formControlName="passExpire" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <label class="e-float-text">Ngày hết hạn</label>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('passExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('passExpire')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Nơi cấp-->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Nơi
+                          cấp</label>
+                        <input class="form-control" type="text" formControlName="passPlace"
+                          [(ngModel)]="model.passPlace">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('passPlace')!.hasError('') && !editForm.controls['addinfo'].get('passPlace')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Số visa</label>
+                  </div>
+                  <div class="row">
+                    <!-- Visa-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Visa</label>
+                        <input class="form-control" type="text" formControlName="visaNo" [(ngModel)]="model.visaNo">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaNo')!.hasError('') && !editForm.controls['addinfo'].get('visaNo')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày cấp -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày cấp</label>
+                        <ejs-datepicker id="visaDate" format="dd/MM/yyyy" [(ngModel)]="model.visaDate"
+                          (keydown)="changeDate('visaDate')" (blur)="changeDate('visaDate')" formControlName="visaDate"
+                          placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaDate')!.hasError('') && !editForm.controls['addinfo'].get('visaDate')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('visaDate')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày hết hạn -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày hết
+                          hạn</label>
+                        <ejs-datepicker id="visaExpire" format="dd/MM/yyyy" [(ngModel)]="model.visaExpire"
+                          (keydown)="changeDate('visaExpire')" (blur)="changeDate('visaExpire')"
+                          formControlName="visaExpire" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaExpire')!.hasError('') && !editForm.controls['addinfo'].get('visaExpire')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('visaExpire')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Nơi cấp-->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Nơi
+                          cấp</label>
+                        <input class="form-control" type="text" formControlName="visaPlace"
+                          [(ngModel)]="model.visaPlace">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('visaPlace')!.hasError('') && !editForm.controls['addinfo'].get('visaPlace')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Giấy phép lao động</label>
+                  </div>
+                  <div class="row">
+                    <!-- Giấy phép lao động-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Số giấy phép lao
+                          động</label>
+                        <input class="form-control" type="text" formControlName="workPermit"
+                          [(ngModel)]="model.workPermit">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermit')!.hasError('') && !editForm.controls['addinfo'].get('workPermit')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày cấp -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày cấp</label>
+                        <ejs-datepicker id="workPermitDate" format="dd/MM/yyyy" [(ngModel)]="model.workPermitDate"
+                          (keydown)="changeDate('workPermitDate')" (blur)="changeDate('workPermitDate')"
+                          formControlName="workPermitDate" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermitDate')!.hasError('') && !editForm.controls['addinfo'].get('workPermitDate')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermitDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workPermitDate')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày hết hạn -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày hết
+                          hạn</label>
+                        <ejs-datepicker id="workPermitExpire" format="dd/MM/yyyy" [(ngModel)]="model.workPermitExpire"
+                          (keydown)="changeDate('workPermitExpire')" (blur)="changeDate('workPermitExpire')"
+                          formControlName="workPermitExpire" placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermitExpire')!.hasError('') && !editForm.controls['addinfo'].get('workPermitExpire')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermitExpire')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workPermitExpire')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Nơi cấp-->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Nơi cấp</label>
+                        <input class="form-control" type="text" formControlName="workPermitPlace"
+                          [(ngModel)]="model.workPermitPlace">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workPermitPlace')!.hasError('') && !editForm.controls['addinfo'].get('workPermitPlace')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="group-box">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Chứng chỉ hành nghề </label>
+                  </div>
+                  <div class="row">
+                    <!-- Giấy phép lao động-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Số Chứng chỉ hành nghề</label>
+                        <input class="form-control" type="text" formControlName="workNo" [(ngModel)]="model.workNo">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workNo')!.hasError('') && !editForm.controls['addinfo'].get('workNo')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày cấp -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngày cấp</label>
+                        <ejs-datepicker id="workDate" format="dd/MM/yyyy" [(ngModel)]="model.workDate"
+                          (keydown)="changeDate('workDate')" (blur)="changeDate('workDate')" formControlName="workDate"
+                          placeholder=".../.../...">
+                        </ejs-datepicker>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workDate')!.hasError('') && !editForm.controls['addinfo'].get('workDate')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['addinfo'].get('workDate')!.hasError('incorrect') && !editForm.controls['addinfo'].get('workDate')!.untouched">
+                          Sai định dạng
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngày hết hạn -->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Phạm vi</label>
+                        <input class="form-control" type="text" formControlName="workScope"
+                          [(ngModel)]="model.workScope">
+                      </div>
+                    </div>
+                    <!-- Nơi cấp-->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Nơi cấp</label>
+                        <input class="form-control" type="text" formControlName="workPlace"
+                          [(ngModel)]="model.workPlace">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="group-box" formGroupName="education">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Trình độ văn hóa</label>
+                  </div>
+                  <div class="row">
+                    <!--Trường  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Trường</label>
+                        <input class="form-control" type="text" formControlName="schoolId" [(ngModel)]="model.schoolId">
+                      </div>
+                    </div>
+                    <!--Trình độ chuyên môn  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Trình độ chuyên
+                          môn</label>
+                        <input class="form-control" type="text" formControlName="qualificationId"
+                          [(ngModel)]="model.qualificationId">
+
+                      </div>
+                    </div>
+                    <!--HÌnh thức đào tạo  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Hình thức đào
+                          tạo</label>
+                        <ejs-dropdownlist id='trainingFormId' [dataSource]='lstTrainingFormId'
+                          formControlName="trainingFormId" [showClearButton]="true" [(ngModel)]="model.trainingFormId"
+                          [fields]='fields' [allowFiltering]='true' (filtering)='onFiltering($event,lstTrainingFormId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['education'].get('trainingFormId')!.hasError('') && !editForm.controls['education'].get('trainingFormId')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Trình độ học vấn  -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Trình độ học
+                          vấn</label>
+                        <ejs-dropdownlist id='learningLevelId' [dataSource]='lstLearningLevelId'
+                          formControlName="learningLevelId" [showClearButton]="true" [(ngModel)]="model.learningLevelId"
+                          [fields]='fields' [allowFiltering]='true'
+                          (filtering)='onFiltering($event,lstLearningLevelId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['education'].get('learningLevelId')!.hasError('') && !editForm.controls['education'].get('learningLevelId')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Điểm số -->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Điểm
+                          số</label>
+                        <ejs-numerictextbox format="N0" locale="en" name="languageMark" formControlName="languageMark"
+                          [(ngModel)]="model.languageMark" min="0" max="999999999">
+                        </ejs-numerictextbox>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['education'].get('languageMark')!.hasError('') && !editForm.controls['education'].get('languageMark')!.untouched">
+                          Bắt buộc nhập
+                        </span>
+                      </div>
+                    </div>
+                    <!-- Ngoại ngữ-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <input class="form-control" type="text" formControlName="language" [(ngModel)]="model.language">
+                        <span class="e-float-line"></span>
+                        <label class="e-float-text ">Ngoại ngữ</label>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="group-box" formGroupName="user">
+                  <div class="card-head">
+                    <div class="icon-info histaff-icon"></div>
+                    <label class="title">Tài khoản</label>
+                  </div>
+                  <div class="row">
+                    <!-- Số tài khoản-->
+                    <div class="col-sm-4">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Số
+                          tài
+                          khoản</label>
+                        <input class="form-control" type="text" formControlName="bankNo" [(ngModel)]="model.bankNo">
+                        <span class="input-error"
+                          *ngIf="editForm.controls['user'].get('bankNo')!.hasError('') && !editForm.controls['user'].get('bankNo')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Ngân hàng  -->
+                    <div class="col-sm-8">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Ngân
+                          hàng</label>
+                        <ejs-dropdownlist id='bankId' [dataSource]='lstBankId' formControlName="bankId"
+                          [showClearButton]="true" [(ngModel)]="model.bankId" [fields]='fields' [allowFiltering]='true'
+                          (filtering)='onFiltering($event,lstBankId)'>
+                        </ejs-dropdownlist>
+                        <span class="input-error"
+                          *ngIf="editForm.controls['user'].get('bankId')!.hasError('') && !editForm.controls['user'].get('bankId')!.untouched">
+                          Bắt buộc chọn
+                        </span>
+                      </div>
+                    </div>
+                    <!--Chi nhánh  -->
+                    <div class="col-sm-12">
+                      <div class="form-group vertical">
+                        <label class="e-float-text ">Chi nhánh</label>
+                        <input class="form-control" type="text" formControlName="bankBranch"
+                          [(ngModel)]="model.bankBranch">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- CONFIRM BACK MODAL-->
+<gohr-confirm-modal id="confirm-back-modal">
+  <div class="row full-width gohr-modal-header">
+    Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

@@ -1,0 +1,34 @@
+export interface IAtEntitLement {
+  id: number;
+  year: number;
+  employeeId?: number;
+  workingTimeHave?: number;
+  prevHave?: number;
+  prevUsed?: number;
+  curHave?: number;
+  curUsed?: number;
+  curHave1?: number;
+  curHave2?: number;
+  curHave3?: number;
+  curHave4?: number;
+  curHave5?: number;
+  curHave6?: number;
+  curHave7?: number;
+  curHave8?: number;
+  curHave9?: number;
+  curHave10?: number;
+  curHave11?: number;
+  curHave12?: number;
+  curUsed1?: number;
+  curUsed2?: number;
+  curUsed3?: number;
+  curUsed4?: number;
+  curUsed5?: number;
+  curUsed6?: number;
+  curUsed7?: number;
+  curUsed8?: number;
+  curUsed9?: number;
+  curUsed10?: number;
+  curUsed11?: number;
+  curUsed12?: number;
+}

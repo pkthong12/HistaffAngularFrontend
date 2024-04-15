@@ -1,0 +1,9 @@
+<core-page-header [title]="title" [hideButtonGroup]="true"></core-page-header>
+
+<div class="menu-tree-grid-container">
+    <core-tree-grid [getFullListApi]="getFullListApi" keyField="id" titleField="code" parentField="parent"
+        [treeColumnWidth]="400" [columns]="columns" [crud]="crud"
+        (onRowDoubleClick)="onRowDoubleClick($event)"></core-tree-grid>
+</div>
+
+<router-outlet name="menuAux"></router-outlet>

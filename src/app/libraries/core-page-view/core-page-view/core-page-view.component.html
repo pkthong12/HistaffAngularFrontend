@@ -1,0 +1,30 @@
+<div class="core-page-view-container">
+  <core-loading-surface [loading]="loading"></core-loading-surface>
+
+  <div [class.show-left-line]="showLeftLine">
+    <div class="sections-wrapper">
+      <div *ngFor="let section of sections" class="section">
+        <div class="section-header-label" *ngIf="section.caption">
+          <div class="icon-info"></div>
+          <label>{{ section.caption | translate : lang }}</label>
+        </div>
+
+        <div
+          *ngFor="let row of section.rows"
+          class="row mb15 no-padding no-margin"
+        >
+          <ng-container *ngFor="let item of row">
+            <div [class]="'col-md-' + (item.labelFlexSize + item.flexSize)">
+              <div class="form-group vertical">
+                <div [appTooltip]="item.label | translate : lang" class="label">{{ item.label | translate : lang }}<i *ngIf="!!item.hint!" class="feather-help-circle" [appTooltip]="item.hint!"></i>:</div>
+                <div [appTooltip]="item.value | tableCell : item.pipe : lang" class="content">
+                  {{ item.value | tableCell : item.pipe : lang }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+.confirm-dialog-state-container {
+    position: fixed;
+    display: block;
+    top: calc(var(--size-header-height) + var(--size-layout-block-cell-spacing));
+    left: var(--size-layout-block-cell-spacing);
+    z-index: 9999999;
+    width: 320px;
+    height: 320px;
+}

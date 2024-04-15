@@ -1,0 +1,74 @@
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' rowHeight='37' headerHeight='42'
+  [allowPaging]='true' [height]='configs.heightTimeSheet()' [pageSettings]='configs.pageSettings' [enableHover]='true'
+  [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+  [selectionSettings]='selectionOptions' [allowFiltering]='true' [allowTextWrap]="true" [allowExcelExport]='true' 
+  [textWrapSettings]="configs.wrapSettings" [enableHover]="false" (dataStateChange)="dataStateChange($event!)">
+  <e-columns>
+    <e-column field='EMPLOYEE_CODE' textAlign="Left" headerTextAlign="Center" headerText="Mã"
+      clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+    </e-column>
+    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerTextAlign="Center" headerText="Tên"
+      clipMode='EllipsisWithTooltip' width="160" isFrozen="true">
+    </e-column>
+    <e-column field='ORG_NAME' textAlign="Left" headerTextAlign="Center" width="120" headerText="Phòng ban"
+      clipMode='EllipsisWithTooltip' width="150">
+    </e-column>
+    <e-column field='POSITION_NAME' textAlign="Left" headerTextAlign="Center" headerText="Chức danh"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='TIME_STANDARD' textAlign="Center" headerTextAlign="Center" headerText="Giờ công chuẩn"
+      clipMode='EllipsisWithTooltip' width="130">
+    </e-column>
+    <e-column field='WORKING_X' textAlign="Center" headerTextAlign="Center" headerText="Làm việc ngày thường"
+      clipMode='EllipsisWithTooltip' width="130">
+    </e-column>
+    <e-column field='WORKING_XL' textAlign="Center" headerTextAlign="Center" headerText="Làm việc ngày nghỉ lễ"
+      clipMode='EllipsisWithTooltip' width="130">
+    </e-column>
+    <e-column field='WORKING_TC' textAlign="Center" headerTextAlign="Center" headerText="Tăng cường"
+      clipMode='EllipsisWithTooltip' width="130">
+    </e-column>
+    <e-column field='WORKING_CD' textAlign="Center" headerTextAlign="Center" headerText="Chế độ"
+      clipMode='EllipsisWithTooltip' width="100">
+    </e-column>
+    <e-column field='WORKING_P' textAlign="Center" headerTextAlign="Center" headerText="Phép năm"
+      clipMode='EllipsisWithTooltip' width="100">
+    </e-column>
+    <e-column field='WORKING_KL' textAlign="Center" headerTextAlign="Center" headerText="Nghỉ không lương"
+      clipMode='EllipsisWithTooltip' width="110">
+    </e-column>
+    <e-column field='WORKING_NB' textAlign="Center" headerTextAlign="Center" headerText="Nghỉ bù"
+      clipMode='EllipsisWithTooltip' width="100">
+    </e-column>
+    <e-column field='WORKING_L' textAlign="Center" headerTextAlign="Center" headerText="Nghỉ lễ theo quy định"
+      clipMode='EllipsisWithTooltip' width="130">
+    </e-column>
+    <e-column field='WORKING_CT' textAlign="Center" headerTextAlign="Center" headerText="Đi công tác"
+      clipMode='EllipsisWithTooltip' width="100">
+    </e-column>
+    <e-column field='WORKING_VR' textAlign="Center" headerTextAlign="Center" headerText="Nghỉ việc riêng có hưởng lương"
+      clipMode='EllipsisWithTooltip' width="140">
+    </e-column>
+    <e-column field='WORKING_TS' textAlign="Center" headerTextAlign="Center" headerText="Nghỉ thai sản"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='WORKING_H' textAlign="Center" headerTextAlign="Center" headerText="Hội họp"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='WORKING_OS' textAlign="Center" headerTextAlign="Center" headerText="Công Onsite"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='FULLDAY' textAlign="Center" headerTextAlign="Center" headerText="Làm việc cả ngày"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='WORKING_LPAY' textAlign="Right" headerTextAlign="Center" headerText="Nghỉ có hưởng lương"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='WORKING_N' textAlign="Center" headerTextAlign="Center" headerText="Công nghỉ"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+    <e-column field='WORKING_PAY' textAlign="Center" headerTextAlign="Center" headerText="Công tính lương"
+      clipMode='EllipsisWithTooltip' width="120">
+    </e-column>
+  </e-columns>
+</ejs-grid>

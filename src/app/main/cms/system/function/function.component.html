@@ -1,0 +1,11 @@
+<div class="tenant-function-container">
+  <core-page-list [apiDefinition]="apiDefinition" [columns]="columns" [editRoute]="editRoute" [crud]="crud"
+    [columnSearchDefaultOpen]="true" [outerSort]="defaultSort" [title]="title"
+    [autoResizeWithWindow]="true"></core-page-list>
+</div>
+
+<ng-template #pathFullMatch let-pathFullMatch="context.pathFullMatch">
+  <div class="d-flex d-flex-center">
+    <core-checkbox [inputValue]="pathFullMatch" [disabled]="true"></core-checkbox>
+  </div>
+</ng-template>

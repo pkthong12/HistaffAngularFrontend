@@ -1,0 +1,489 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Hồ sơ <i
+              class="fa fa-angle-double-right" aria-hidden="true"></i>Danh mục
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/profile/list/salaryrank'>Thang bảng lương</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="app-content">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <!-- <th scope="col" rowspan="2">STT</th> -->
+            <th scope="col" rowspan="2">Thang lương <span (click)="AddRecord('scale')" class="addRecord">+</span></th>
+            <th scope="col" rowspan="2">Ngạch lương <span (click)="AddRecord('rank')" class="addRecord">+</span></th>
+            <th scope="col" [attr.colspan]="salaryLevelNum">Bậc lương <span (click)="AddRecord('level')" class="addRecord">+</span></th>
+          </tr>
+          <tr>
+            <th scope="col" *ngFor="let item of lstSalaryLevel">{{item.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rank of lstSalaryRanks">
+            <!-- <th scope="row" [attr.colspan]="rank.countRank" *ngIf="rank.isShow">{{rank.stt}}</th> -->
+            <td scope="row" [attr.rowspan]= "rank.countRank" *ngIf="rank.isShow" (dblclick)="EditRecord('scale',rank)">{{rank.nameScale}}</td>
+            <td scope="row" (dblclick)="EditRecord('rank',rank)">{{rank.name}}</td>
+            <td scope="row" *ngFor="let level of rank.lstlevel" ><span (dblclick)="EditRecord('level',level)">{{level.monney | number}}</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- add scale-->
+<gohr-confirm-modal id="add-scale">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="scaleForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Mã</label>
+              <input class="form-control" type="text" formControlName="code"
+                [(ngModel)]="scaleModel.code" maxlength="31" readonly>
+              <span class="input-error"
+                *ngIf="scaleForm.get('code')!.hasError('required') && !scaleForm.get('code')!.untouched">
+                Bắt buộc nhập
+              </span>
+              <span class="input-error "
+                *ngIf="scaleForm.get('code')!.hasError('incorrect') && !scaleForm.get('code')!.untouched">
+                Sai định dạng
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Tên</label>
+              <input class="form-control" type="text" formControlName="name"
+                [(ngModel)]="scaleModel.name" maxlength="51">
+              <span class="input-error"
+                *ngIf="scaleForm.get('name')!.hasError('required') && !scaleForm.get('name')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">Thứ tự</label>
+              <input class="form-control" type="text" formControlName="order"
+                [(ngModel)]="scaleModel.orders" maxlength="51">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Ghi
+                chú</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="scaleModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddScale('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmAddScale('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+<!-- edit scale-->
+<gohr-confirm-modal id="edit-scale">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="scaleForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Mã</label>
+              <input class="form-control" type="text" formControlName="code"
+                [(ngModel)]="scaleModel.code" maxlength="31" readonly>
+              <span class="input-error"
+                *ngIf="scaleForm.get('code')!.hasError('required') && !scaleForm.get('code')!.untouched">
+                Bắt buộc nhập
+              </span>
+              <span class="input-error "
+                *ngIf="scaleForm.get('code')!.hasError('incorrect') && !scaleForm.get('code')!.untouched">
+                Sai định dạng
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Tên</label>
+              <input class="form-control" type="text" formControlName="name"
+                [(ngModel)]="scaleModel.name" maxlength="51">
+              <span class="input-error"
+                *ngIf="scaleForm.get('name')!.hasError('required') && !scaleForm.get('name')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text">Thứ tự</label>
+              <input class="form-control" type="text" formControlName="order"
+                [(ngModel)]="scaleModel.orders" maxlength="51">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Ghi
+                chú</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="scaleModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','scale')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','scale')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+
+<!-- add rank-->
+<gohr-confirm-modal id="add-rank">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="rankForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Mã</label>
+              <input class="form-control" type="text" formControlName="code"
+                [(ngModel)]="rankModel.code" maxlength="31">
+              <span class="input-error"
+                *ngIf="rankForm.get('code')!.hasError('required') && !rankForm.get('code')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Tên</label>
+              <input class="form-control" type="text" formControlName="name"
+                [(ngModel)]="rankModel.name" maxlength="51">
+              <span class="input-error"
+                *ngIf="rankForm.get('name')!.hasError('required') && !rankForm.get('name')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Thang
+                lương</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId'
+                [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="rankModel.salaryScaleId"
+                formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true'
+                (filtering)='onFiltering($event,lstSalaryScaleId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="rankForm.get('salaryScaleId')!.hasError('required') && !rankForm.get('salaryScaleId')!.untouched">
+                Bắt buộc chọn
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Số thứ
+                tự</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders"
+                formControlName="orders" [(ngModel)]="rankModel.orders" min="0"
+                max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text " for="name">Ghi
+                chú</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="rankModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddRank('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmAddRank('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+<!-- edit rank-->
+<gohr-confirm-modal id="edit-rank">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="rankForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Mã</label>
+              <input class="form-control" type="text" formControlName="code"
+                [(ngModel)]="rankModel.code" maxlength="31" readonly>
+              <span class="input-error"
+                *ngIf="rankForm.get('code')!.hasError('required') && !rankForm.get('code')!.untouched">
+                Bắt buộc nhập
+              </span>
+              <span class="input-error "
+                *ngIf="rankForm.get('code')!.hasError('incorrect') && !rankForm.get('code')!.untouched">
+                Sai định dạng
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Tên</label>
+              <input class="form-control" type="text" formControlName="name"
+                [(ngModel)]="rankModel.name" maxlength="51">
+              <span class="input-error"
+                *ngIf="rankForm.get('name')!.hasError('required') && !rankForm.get('name')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Thang
+                lương</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId'
+                [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="rankModel.salaryScaleId"
+                formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true'
+                (filtering)='onFiltering($event,lstSalaryScaleId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="rankForm.get('salaryScaleId')!.hasError('required') && !rankForm.get('salaryScaleId')!.untouched">
+                Bắt buộc chọn
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Số thứ
+                tự</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders"
+                formControlName="orders" [(ngModel)]="rankModel.orders" min="0"
+                max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text " for="name">Ghi
+                chú</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="rankModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','rank')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','rank')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+
+<!-- add level-->
+<gohr-confirm-modal id="add-level">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="levelForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Mã</label>
+              <input class="form-control" type="text" formControlName="code"
+                [(ngModel)]="levelModel.code" maxlength="31">
+              <span class="input-error"
+                *ngIf="levelForm.get('code')!.hasError('required') && !levelForm.get('code')!.untouched">
+                Bắt buộc nhập
+              </span>
+              <span class="input-error "
+                *ngIf="levelForm.get('code')!.hasError('incorrect') && !levelForm.get('code')!.untouched">
+                Sai định dạng
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-grou vertical">
+              <label class="e-float-text required">Tên</label>
+              <input class="form-control" type="text" formControlName="name"
+                [(ngModel)]="levelModel.name" maxlength="51">
+              <span class="input-error"
+                *ngIf="levelForm.get('name')!.hasError('required') && !levelForm.get('name')!.untouched">
+                Bắt buộc nhập
+              </span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Thang
+                lương</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryScaleId'
+                [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="levelModel.salaryScaleId"
+                formControlName="salaryScaleId" [placeholder]="''"
+                [allowFiltering]='true'
+                (filtering)='onFiltering($event,lstSalaryScaleId)'
+                (change)="changeSalaryScale($event!)">
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="levelForm.get('salaryScaleId')!.hasError('required') && !levelForm.get('salaryScaleId')!.untouched">
+                Bắt buộc chọn
+              </span>
+            </div>
+          </div>
+          <!--  -->
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Ngạch
+                lương</label>
+              <ejs-dropdownlist [dataSource]='lstSalaryRankId'
+                [fields]='fields' [showClearButton]="true"
+                [(ngModel)]="levelModel.salaryRankId"
+                formControlName="salaryRankId" [placeholder]="''"
+                [allowFiltering]='true'
+                (filtering)='onFiltering($event,lstSalaryRankId)'>
+              </ejs-dropdownlist>
+              <span class="input-error"
+                *ngIf="levelForm.get('salaryRankId')!.hasError('required') && !levelForm.get('salaryRankId')!.untouched">
+                Bắt buộc chọn
+              </span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Số
+                tiền</label>
+              <ejs-numerictextbox format="N0" locale="en" name="monney"
+                formControlName="monney" [(ngModel)]="levelModel.monney" min="0"
+                max="999999999">
+              </ejs-numerictextbox>
+              <span class="input-error"
+              *ngIf="levelForm.get('monney')!.hasError('required') && !levelForm.get('monney')!.untouched">
+              Bắt buộc nhập
+            </span>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Số thứ
+                tự</label>
+              <ejs-numerictextbox format="N0" locale="en" name="orders"
+                formControlName="orders" [(ngModel)]="levelModel.orders" min="0"
+                max="999999999">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text ">Ghi
+                chú</label>
+              <textarea class="form-control" type="text" formControlName="note"
+                [(ngModel)]="levelModel.note"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmAddLevel('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmAddLevel('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+<!-- edit level-->
+<gohr-confirm-modal id="edit-level">
+  <div class="row full-width gohr-modal-header">
+    <form name="editForm" [formGroup]="levelForm" novalidate>
+      <div class="group-box">
+        <!-- title -->
+        <div class="card-head">
+          <div class="icon-info histaff-icon"></div>
+          <label class="title">Thông tin</label>
+        </div>
+        <!--  -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group vertical">
+              <label class="e-float-text required">Số
+                tiền</label>
+              <ejs-numerictextbox format="N0" locale="en" name="monney"
+                formControlName="monney" [(ngModel)]="levelModel.monney" min="0"
+                max="999999999">
+              </ejs-numerictextbox>
+              <span class="input-error"
+              *ngIf="levelForm.get('monney')!.hasError('required') && !levelForm.get('monney')!.untouched">
+              Bắt buộc nhập
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmEdit('ok','level')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmEdit('cancel','level')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+
+

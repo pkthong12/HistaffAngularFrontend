@@ -1,0 +1,98 @@
+input {
+    display: none;
+}
+
+.core-ios-switcher-container {
+
+    --outer-width: 80px;
+    --outer-height: 28px;
+    --outer-falsy-border: solid #E9E9EB;
+    --outer-truely-border: solid #FFA427;
+    --outer-border-width: 2px;
+    --outer-falsy-bg-color: #E9E9EB;
+    --outer-falsy-color: black;
+    --outer-truely-bg-color: #FFA427;
+    --outer-truely-color: white;
+    --outer-font-size: 14px;
+
+
+    --circle-bg-color: white;
+
+    --checkbox-size: 18px;
+    --checkbox-border-color: #B9B9B9;
+    --checkbox-hover-bg: #B9B9B9;
+    --checkbox-bg: #FFFFFF;
+    --checkbox-checked-bg: #358ccb;
+    --checkbox-color: #FFFFFF;
+    --font-size: 15px;
+    --text-color: gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    font-size: var(--outer-font-size);
+    font-weight: 400;
+    color: var(--text-color);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    & .outer {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--outer-width);
+        height: var(--outer-height);
+        border: var(--outer-falsy-border);
+        border-width: var(--outer-border-width);
+        border-radius: var(--outer-height);
+        background-color: var(--outer-falsy-bg-color);
+        color: var(--outer-falsy-color);
+        cursor: pointer;
+        transition: 0.5s ease-out;
+
+        & .circle {
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            display: block;
+            position: absolute;
+            background-color: var(--circle-bg-color);
+            cursor: pointer;
+            left: var(--outer-border-width);
+            transition: left 0.5s ease-out !important;
+        }
+
+        & label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size);
+            padding-left: var(--outer-height);
+            padding-right: 0;
+        }
+    }
+
+    & .truely {
+        border: solid var(--outer-truely-border);
+        background-color: var(--outer-truely-bg-color) !important;
+        color: var(--outer-truely-color) !important;
+        transition: 0.5s ease-out;
+
+        & label {
+            padding-left: 0 !important;
+            padding-right: var(--outer-height) !important;
+            transition: 0.5s ease-out;
+        }
+
+        & .circle {
+            left: 57px !important;
+            transition: left 0.5s ease-out !important;
+        }
+    }
+
+}

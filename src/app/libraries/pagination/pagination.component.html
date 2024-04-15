@@ -1,0 +1,21 @@
+<div #container class="pagination-container d-flex-between">
+    <div class="pagination-container">
+        <div class="first" [class.disable]="!!!pageCount || currentPage$.value===1" (click)="goFirst()"></div>
+        <div class="previous" [class.disable]="!!!pageCount || currentPage$.value===1" (click)="goPrevious()"></div>
+        <div #current class="current">
+            <div class="d-flex-center">
+                <i class="feather-aperture aperture" [class.visible]="loading"
+                [ngStyle]="{
+                    animationName: navigationDirection === 1 ? 'rotate-current-content-fw' : 'rotate-current-content-bw'
+                }"
+                ></i>
+                <span class="current-text" *ngIf="!loading">{{ currentButtonContent }}</span>
+            </div>
+        </div>
+        <div class="next" [class.disable]="!!!pageCount || currentPage$.value===pageCount" (click)="goNext()"></div>
+        <div class="last" [class.disable]="!!!pageCount || currentPage$.value===pageCount" (click)="goLast()"></div>
+    </div>
+    <a (click)="onClickAddLocal()" *ngIf="showAdd">
+        <div class="add"></div>
+    </a>
+</div>

@@ -1,0 +1,16 @@
+<app-threedots *ngIf="loading"></app-threedots>
+<div #container class="core-list-container" *ngIf="!loading">
+    <h4 *ngIf="!!title">{{ title | translate: lang}}</h4>
+    <div class="list">
+        <div class="search-wrapper">
+            <input class="form-control search" type="text" [placeholder]="placeholder | translate: lang"
+                [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange($event)" autocomplete="false">
+        </div>
+        <ul #ulElement>
+            <li *ngFor="let option of localOptions; let index = index" (click)="onListItemClick(option)"
+                [class.active]="option.value === value">
+                <label>{{ option.text }}</label>
+            </li>
+        </ul>
+    </div>
+</div>

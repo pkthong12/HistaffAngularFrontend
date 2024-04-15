@@ -1,0 +1,87 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Lương <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i>Danh mục
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/payroll/list/salarystructure'>Kết cấu bảng
+              lương</span>
+          </div>
+        </div> <!-- toolbar -->
+        <app-common-tools name="salarystructor" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="row">
+        <div class="col-sm-2 b-r">
+          <div>
+            <ejs-treeview #listTreeObj id="default" (nodeSelected)="userSelecting($event!)">
+            </ejs-treeview>
+          </div>
+        </div>
+        <div class="col-sm-10 p-l">
+          <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' rowHeight='35' headerHeight='40'
+            [height]='configs.height()' [allowPaging]='true' [allowSelection]='true'
+            [pageSettings]='configs.pageSettings' [enableHover]='true' [allowRowDragAndDrop]='true'
+            (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true' allowResizing='true'
+            [locale]='configs.currentLang' [allowSelection]='true' (rowDrop)="rowDrop($event!)" [allowFiltering]='true'>
+            <e-columns>
+              <e-column width="40" eaderTextAlign="Center" textAlign="Center" headerText="STT"
+                clipMode="EllipsisWithTooltip">
+                <ng-template #template let-data>
+                  <span>{{ formatStt(data.index) }}</span>
+                </ng-template>
+              </e-column>
+
+              <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+                [allowEditing]="false">
+              </e-column>
+
+              <e-column field='elementName' headerTextAlign="Left" textAlign="Left" headerText="Phần tử lương"
+                clipMode='EllipsisWithTooltip'></e-column>
+              <e-column [isPrimaryKey]='true' width="100" field='isVisible' textAlign="Center"
+                headerText="Hiển thị trong bảng lương">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isVisible" (change)="check(data, 'isVisible',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column [isPrimaryKey]='true' width="70" field='isCalculate' textAlign="Center"
+                headerText="Thiết lập công thức">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isCalculate" (change)="check(data, 'isCalculate',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <e-column [isPrimaryKey]='true' width="70" field='isImport' textAlign="Center"
+                headerText="Dữ liệu Import">
+                <ng-template #template let-data>
+                  <ejs-checkbox [ngModel]="data.isImport" (change)="check(data, 'isImport',$event)">
+                  </ejs-checkbox>
+                </ng-template>
+              </e-column>
+              <!-- <e-column field='orders' headerTextAlign="Center" textAlign="Center" headerText="Thứ tự" width="80">
+              </e-column> -->
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<gohr-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width gohr-modal-header">
+    Bạn có chắc chắn muốn xóa dữ liệu?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

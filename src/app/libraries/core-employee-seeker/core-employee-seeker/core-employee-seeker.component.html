@@ -1,0 +1,20 @@
+<div class="core-employee-seeker-container">
+    <core-page-list [hideCheck]="!!!multiMode" [height]="620" [apiDefinition]="apiDefinition" [columns]="columns"
+        [editRoute]="editRoute" [crud]="crud" [title]="title" [left]="orgTree" *ngIf="!!avatar"
+        [outerParam$]="outerParam$" [outerInOperators]="outerInOperators" [outerFilterOperators]="outerFilterOperators"
+        [autoResizeWithWindow]="true" [seekerMode]="true" (rowDoubleClick)="onRowDoubleClick($event)"
+        (selectedIdsChange)="onSelectedIdsChange($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"
+        [outerSort]="outerSort"
+    ></core-page-list>
+
+    <ng-template #orgTree>
+        <core-org-tree [(ngModel)]="orgIds" (ngModelChange)="onOrgIdsChange($event)" [fullWidthMode]="false" [height]="650">
+        </core-org-tree>
+    </ng-template>
+
+    <ng-template #avatar let-avatar="context.avatar">
+        <img [src]="(avatar | mapAvatarToServer) || defaultAvatar" class="in-table-avatar" appImageErrorResolver>
+    </ng-template>
+
+</div>

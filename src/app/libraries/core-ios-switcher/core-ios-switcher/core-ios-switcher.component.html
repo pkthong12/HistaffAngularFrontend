@@ -1,0 +1,10 @@
+<input type="checkbox" [(ngModel)]="value" (ngModelChange)="onValueChange($event)">
+
+<label #container class="core-ios-switcher-container">
+
+    <div class="outer" [class.truely]="value" (click)="onClick()">
+        <div class="circle"></div>
+        <label>{{ labelText }}</label>
+    </div>
+
+</label>

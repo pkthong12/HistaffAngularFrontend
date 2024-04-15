@@ -1,0 +1,19 @@
+<div class="core-page-list-content-container" #corePageListContentContainer>
+    <core-table width="100%" [height]="tableHeight" headerHeight="42px" [rowHeight]="rowHeight" [wrap]="true"
+        [columns]="columns" [data]="list" [showCheckbox]="!!!hideCheck" [wrap]="true" headerHeight="60px"
+        [tools]="inlineTools" (onRowClick)="onRowClick($event)" (onSelectedIdsChange)="onSelectedIdsChange($event)"
+        [frozen]="frozen || 1" (onSearching)="onSearching($event)" (onColumnCaptionClick)="onColumnCaptionClick($event)"
+        [corePageListInstanceNumber]="corePageListInstanceNumber"
+        [disableHighlightOnClick]="disableHighlightOnClick" [loading]="loading" [columnSearchDefaultOpen]="columnSearchDefaultOpen"
+        [wrap]="wrap"
+        [headerWrap]="headerWrap"
+        [headerFirstRowHeight]="headerFirstRowHeight"
+        ></core-table>
+    <div class="d-flex-end pagination-wrapper" #paginationContainer>
+        <core-pagination-full [height]="layoutService.corePaginationHeight" [currentPage$]="currentPage$" [pageSize$]="pageSize$"
+            [pageCount]="pageCount"
+            [innerBodyCount$]="innerBodyCount$" [pagination$]="pagination$" [loading]="loading"
+            [background]="'#848484'"></core-pagination-full>
+
+    </div>
+</div>

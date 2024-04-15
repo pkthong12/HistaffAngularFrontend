@@ -1,0 +1,54 @@
+<div #container class="core-date-picker-container">
+    <input type="checkbox" [(ngModel)]="openState">
+    <input type="checkbox" [(ngModel)]="monthPickerActive">
+    <input type="checkbox" [(ngModel)]="yearPickerActive">
+    <input #backward type="checkbox" class="tl-datepicker-direction">
+    <input #input type="text" class="form-control" [placeholder]="showPlaceholder ? 'dd/mm/yyyy' : ''"
+        maxlength="10" [(ngModel)]="textValue" (ngModelChange)="onChangeValue($event)" [class.form-control-disabled]="disabled" [disabled]="disabled"><label class="icon" (click)="toggleOpen()"></label>
+    <div class="tl-date-picker-popup" [class.open]="openState">
+        <div class="date-picker-session" [class.d-none]="monthPickerActive || yearPickerActive">
+            <div class="navigator">
+                <label class="month-dropdown" (click)="toggleMonthPickerActive()">{{ currentMonthText }} {{
+                    currentMonthObject$.value.year }}</label>
+                <div class="arrows">
+                    <div class="go-up" (click)="goBackward()"></div>
+                    <div class="go-down" (click)="goForeward()"></div>
+                </div>
+            </div>
+            <div class="weekday-header">
+                <ul>
+                    <li *ngFor="let day of headerWeekdays; let i = index" [class.t7]="i===5" [class.cn]="i===6">
+                        <div>{{ day }}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="calendar-body-container">
+                <div #calendarBody class="calendar-body" [class.slide-up]="direction===1"
+                    [class.slide-down]="direction===-1">
+                    <ul *ngFor="let week of data">
+                        <li *ngFor="let item of week.items; let i = index">
+                            <div [class.out-of-month]="!!!item.currentMonth" [class.t7]="i===5" [class.cn]="i===6"
+                                [class.out-of-range]="!!rangeLimit && !!!((item.dateValue>=rangeLimit.minDate) && (rangeLimit.maxDate>=item.dateValue))"
+                                [class.active]="item.dateValue.getFullYear()===pendingYear && item.dateValue.getMonth()===pendingMonthIndex && item.dateValue.getDate()===pendingDay"
+                                (click)="onItemClick(item.dateValue)">
+                                {{ item.date }}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="month-picker-session" [class.active]="monthPickerActive">
+            <core-month-picker [lang]="lang" [monthObject$]="currentMonthObject$" (onChange)="onMonthObjectChange($event)" (onYearClick)="onMonthPickerYearClick($event)"></core-month-picker>
+        </div>
+        <div class="year-picker-session" [class.active]="yearPickerActive">
+            <core-year-picker [lang]="lang" (onChange)="onYearPicked($event)"></core-year-picker>
+        </div>
+        <div class="footer-wrapper">
+            <div class="cdp-footer">
+                <div class="clear" [class.opacity-0]="!!!textValue" (click)="clear()">{{ 'UI.CORE_DATE_PICKER_CLEAR' | translate: lang }}</div>
+                <div class="digi-watch"></div>
+                <div class="today" (click)="goToday()">{{ 'UI.CORE_DATE_PICKER_TODAY' | translate: lang }}</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+.core-page-list-container {
+
+    --height: auto; // to be recalculated
+
+    box-sizing: border-box !important;
+    border: none !important;
+    height: var(--height);
+
+    & * {
+        box-sizing: border-box;
+    }
+
+    & .pagination-wrapper {
+        //margin: 15px 0px 0px 0px;
+    }
+    & .column-caption{
+        text-align: center;
+    }
+}
+

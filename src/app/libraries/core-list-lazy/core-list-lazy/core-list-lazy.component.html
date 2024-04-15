@@ -1,0 +1,21 @@
+<div #container class="core-list-lazy-container" [ngStyle]="{ height: height + 'px'}">
+    <h4 *ngIf="!!title">{{ title | translate: lang}}</h4>
+    <div class="list">
+        <div class="search-wrapper">
+            <input class="form-control search" type="text" [placeholder]="placeholder | translate: lang"
+                [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange($event)" autocomplete="false">
+        </div>
+
+        <div class="core-scroll-container" #coreScrollContainer [class.form-control-disabled]="disabled">
+            <core-scroll-lazy [visibleOptions]="visibleOptions" [itemTemplate]="itemTemplateRef" [height]="scrollContainerHeight" [totalHeight]="listTotalHeight"
+                [childHeight]="itemHeight" (onPagination)="onPagination($event)"></core-scroll-lazy>
+        </div>
+    
+    </div>
+</div>
+
+<ng-template #itemTemplateRef let-context="context">
+    <li (click)="onListItemClick(context)" [ngStyle]="{ height: itemHeight + 'px' }" [class.active]="context.value===activeValue">
+        <label [ngStyle]="{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }" [appTooltip]="context.text | tableCell: pipe : lang">{{ context.text | tableCell: pipe : lang }}</label>
+    </li>
+</ng-template>

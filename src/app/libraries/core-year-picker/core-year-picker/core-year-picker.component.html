@@ -1,0 +1,20 @@
+<div class="core-year-picker-emitter" [id]="'tl-year-picker-emitter' + id">
+    <div class="tl-year-picker-emitter-header">
+        <div class="tl-year-picker-emitter-year">{{ decadeYearsObject.title }}</div>
+        <div class="arrows">
+            <div class="go-up" (click)="goUp()"></div>
+            <div class="go-down" (click)="goDown()"></div>
+        </div>
+    </div>
+    <div class="years-container-wrapper">
+        <div #yearsContainer class="years-container zoom-in">
+            <ul *ngFor="let row of decadeYearsObject.items; let rowIndex=index">
+                <li *ngFor="let item of row; let subMonthIndex=index" (click)="onClick(item)">
+                    <div [class.active]="item === default">
+                        {{ item }}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

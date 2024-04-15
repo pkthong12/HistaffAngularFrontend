@@ -1,0 +1,269 @@
+.pagination-full-container {
+
+    --bg: #848484;
+    --color: white;
+    --height: 30px;
+    --button-size: 30px;
+    --font-size: 12px;
+    --aperture-size: 36px;
+
+    & * {
+        font-size: 13px !important;
+    }
+
+    background-color: #fff;
+
+    @keyframes rotate-current-content-fw {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+        
+    }
+
+    @keyframes rotate-current-content-bw {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(-360deg);
+        }
+        
+    }
+
+    select {
+        border-color: #848484;
+        color: #848484
+    }
+
+    .add::before {
+        font-family: "feather";
+        content: "\e9b1";
+        font-weight: 700;
+        font-size: var(--font-size);
+        color: white;
+        background: var(--bg);
+        width: var(--button-size);
+        height: var(--button-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
+    .custom-select{
+        border-radius: 30px;
+        width: 80px;
+        height: 28px;
+    }
+    .custom-select-container{
+        color: #A5A4A4;
+        margin-right: 12px;
+        background-color: #fff;
+    }
+
+    .pagination-container {
+        height: var(--height);
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        background-color: white;
+        >div {
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .disable {
+            cursor: default;
+            opacity: 0.5 !important;
+        }
+
+        .current {
+            border-radius: 50%;
+            margin: 0px 0px;
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // transition: 2s;
+        }
+        .not-current{
+            border-radius: 50%;
+            border :1px solid #D1D1D1;
+            opacity: 1;
+            // transition: 2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .not-current:hover{
+            border-radius: 50%;
+             background: #A5A4A4;
+             color: white ;
+             border : 1px solid white
+        }
+
+        .aperture {
+            width:  var(--aperture-size);
+            height: var(--aperture-size);
+            &::before {
+                font-size: var(--aperture-size);
+            }
+            animation: 1s infinite linear;
+            opacity: 0;
+            transition: .25s ease-out;
+        }
+
+        .visible {
+            opacity: 1;
+            transition: .25s ease-out;
+        }
+
+        .current,
+        .loading {
+            width: var(--button-size);
+            height: var(--button-size);
+            background: #848484 !important;
+            color: var(--color);
+        }
+        .not-current
+        {
+            width: var(--button-size);
+            height: var(--button-size);
+            background: white;
+            color: #848484;
+        }
+
+        .current-text {
+            position: absolute;
+        }
+        .not-current>div,
+        .current>div {
+            width: var(--button-size);
+            height: var(--button-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div::before {
+            font-family: "feather";
+            font-size: var(--font-size);
+            width: var(--button-size);
+            height: var(--button-size);
+            background: var(--bg);
+            color: var(--color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .first::before {
+            content: "\e933";
+            border-radius: 50%;
+             background: white;
+             color: #A5A4A4 ;
+             border : 1px solid #D1D1D1;
+        }
+        .first.disable:hover::before{
+            content: "\e933";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid  #A5A4A4;
+        }
+        .first:hover::before {
+            content: "\e933";
+             border-radius: 50%;
+             background: #A5A4A4;
+             color: white ;
+             border : 1px solid white;
+        }
+
+        .previous.disable:hover::before{
+            content: "\e92f";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid  #A5A4A4;
+        }
+        .previous::before {
+            content: "\e92f";
+            border-radius: 50%;
+             background: white;
+             color: #A5A4A4 ;
+             border : 1px solid #D1D1D1;
+        }
+        .previous:hover::before {
+            content: "\e92f";
+            border-radius: 50%;
+            background: #A5A4A4;
+            color: white ;
+            border : 1px solid white;
+        }
+
+        .next::before {
+            content: "\e930";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid #D1D1D1
+        }
+        .next.disable:hover::before{
+            content: "\e930";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid  #A5A4A4;
+        }
+        .next:hover::before {
+            content: "\e930";
+             border-radius: 50%;
+             background: #A5A4A4;
+             color: white ;
+             border : 1px solid white
+        }
+
+        .last.disable:hover::before{
+            content: "\e934";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid  #A5A4A4;
+        }
+        .last::before {
+            content: "\e934";
+            border-radius: 50%;
+            background: white;
+            color: #A5A4A4 ;
+            border : 1px solid #D1D1D1
+        }
+        .last:hover::before {
+            content: "\e934";
+             border-radius: 50%;
+             background: #A5A4A4;
+             color: white ;
+             border : 1px solid white
+        }
+
+    }
+
+}
+@media only screen and (max-width: 768px) {
+    .custom-select-container {
+        display: none;
+      }
+}
+@media only screen and (max-width: 576px) {
+    .pagination-container .pagination-container .not-current {
+        display: none;
+      }
+      .hide-item{
+        display: none!important;
+      }
+
+}
+

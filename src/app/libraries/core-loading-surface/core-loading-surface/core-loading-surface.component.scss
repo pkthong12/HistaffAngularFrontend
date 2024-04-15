@@ -1,0 +1,14 @@
+.core-loading-surface-container {
+
+    --height: 500px;
+    --z-index: 4;
+
+    position: absolute;
+    z-index: var(--z-index);
+    background-color: hsla(0, 50%, 100%, 0.5);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--height);
+}

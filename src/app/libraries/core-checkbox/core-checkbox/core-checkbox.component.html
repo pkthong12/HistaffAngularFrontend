@@ -1,0 +1,13 @@
+<div>
+  <div
+    class="core-checkbox-container"
+    (click)="onLabelClick($event)"
+    [class.form-control-disabled]="disabled"
+  >
+    <input type="checkbox" [(ngModel)]="value" />
+    <label>
+      <a class="checkmark" [class.disabled]="disabled"></a>
+      <span [appTooltip]="text | translate : lang" [position]="tooltipPosition">{{ text | translate : lang }}</span>
+    </label>
+  </div>
+</div>

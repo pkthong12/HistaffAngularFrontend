@@ -1,0 +1,37 @@
+.core-routing-history-container {
+
+    width: 100%;
+    height: auto;
+
+    &>ul {
+
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 40px;
+
+        &>li {
+
+            &>span {
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+                margin: 0px 5px;
+                border: solid 1px darkgray;
+
+                &:hover {
+                    background-color: darkgrey;
+                }
+            }
+        }
+    
+    }
+}

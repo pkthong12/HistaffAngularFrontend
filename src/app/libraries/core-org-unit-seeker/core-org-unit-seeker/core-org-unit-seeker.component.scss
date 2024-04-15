@@ -1,0 +1,13 @@
+.core-org-unit-seeker-container {
+
+    width: 560px;
+
+    & .title {
+        color: #464646;
+        font-weight: 500;
+        font-size: 20px;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

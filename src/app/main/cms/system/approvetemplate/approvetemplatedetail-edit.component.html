@@ -1,0 +1,119 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Hệ thống
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/system/approvetemplate'>Thiết lập Template phê duyệt</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info histaff-icon"></div>
+            <label class="title">Thông tin </label>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Cấp phê duyệt</label>
+                <ejs-numerictextbox format="N0" locale="en" name="appLevel"
+                  formControlName="appLevel" [(ngModel)]="model.appLevel" min="1"
+                  max="999999999">
+                </ejs-numerictextbox>
+                <span class="input-error"
+                  *ngIf="editForm.get('appLevel')!.hasError('required') && !editForm.get('appLevel')!.untouched">
+                  Bắt buộc chọn
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Loại phê duyệt</label>
+                <ejs-dropdownlist [dataSource]='lstAppType'
+                  [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.appType"
+                  formControlName="appType" [placeholder]="''"
+                  [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstAppType)' (change)="changeAppType($event!)">
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('appType')!.hasError('required') && !editForm.get('appType')!.untouched">
+                  Bắt buộc chọn
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical-flex">
+                <label class="e-float-text" for="employeeCode">Nhân viên</label>
+                <input formControlName="employeeCode" [(ngModel)]="model.employeeCode" type="text" class="form-control"
+                  readonly>
+                  &nbsp;&nbsp;
+                <input formControlName="employeeName" [(ngModel)]="model.employeeName" type="text" class="form-control"
+                  readonly>
+                <div class="input-group-append">
+                  <button class="btn btn-search" type="button" [disabled]="editForm.get('appType')!.value !== 1" (click)="choiseEmp()"></button>
+                </div>
+                <span class="input-error"
+                  *ngIf="editForm.get('employeeCode')!.hasError('required') && !editForm.get('employeeCode')!.untouched">
+                  Bắt buộc chọn
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text">Vị trí công việc</label>
+                <ejs-dropdownlist [dataSource]='lstTitleId'
+                  [fields]='fields' [showClearButton]="true"
+                  [(ngModel)]="model.titleId"
+                  formControlName="titleId" [placeholder]="''"
+                  [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstTitleId)' (change)="changeTitleId($event!)">
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('titleId')!.hasError('required') && !editForm.get('titleId')!.untouched">
+                  Bắt buộc chọn
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- search employee -->
+<cms-app-modalsemp id="cms-app-modalsemp">
+</cms-app-modalsemp>
+
+<!-- CONFIRM BACK MODAL-->
+<gohr-confirm-modal id="confirm-back-modal">
+  <div class="row full-width gohr-modal-header">
+    Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

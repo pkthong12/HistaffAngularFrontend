@@ -1,0 +1,272 @@
+.core-date-picker-container {
+    --indicator-height: 39px;
+    --popup-z-index: 99999999;
+    --popup-width: 300px;
+    --popup-height: 400px;
+    --popup-bg-color: white;
+    --popup-x-padding: 12px;
+    --cell-size: 0px;
+    --arrow-font-size: 28px;
+    --font-size: 13px;
+    --font-bold: 700;
+    --font-light: 400;
+    --hover-bg-color: #F1F1F1;
+    --active-bg-color: #F37540;
+    --text-color: white;
+
+    /* 
+    Because calendar-body dimension should be a constant (6 rows),
+    it is calculated based on total number of data rows minus 6
+    --scroll-distance is calculated */
+    --scroll-distance: calc(var(--cell-size) * 6);
+
+    position: relative;
+    font-weight: var(--font-light);
+    font-size: var(--font-size);
+
+    input[type="checkbox"] {
+        display: none;
+    }
+    
+    label.icon {
+        position: absolute;
+        top: 3px;
+        right: 3px
+    }
+    
+    label.icon::before {
+        content: '';
+        display: inline-block;
+        aspect-ratio: 1 / 1;
+        width: var(--indicator-height);
+        height: var(--indicator-height);
+        border-radius: 3px;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none"><rect width="38" height="38" rx="3" fill="%23E9E9E9"/><path d="M26.2105 10.8145H11.887C10.7569 10.8145 9.84082 11.7306 9.84082 12.8607V27.1841C9.84082 28.3142 10.7569 29.2303 11.887 29.2303H26.2105C27.3406 29.2303 28.2567 28.3142 28.2567 27.1841V12.8607C28.2567 11.7306 27.3406 10.8145 26.2105 10.8145Z" stroke="%23848484" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.1421 8.76892V12.8613" stroke="%23848484" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.9565 8.76892V12.8613" stroke="%23848484" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.84082 16.9533H28.2567" stroke="%23848484" stroke-linecap="round" stroke-linejoin="round"/></svg>') 0px 50% no-repeat;
+        background-size: cover;
+        cursor: pointer;
+    }
+    
+    .tl-date-picker-popup {
+        position: absolute;
+        right: 0px;
+        overflow: hidden;
+        z-index: var(--popup-z-index);
+        width: var(--popup-width);
+        height: var(--popup-height);
+        background-color: var(--popup-bg-color);
+        box-shadow: var(--decoration-box-shadow);
+        border-radius: 3px;
+        padding: 0px 12px;
+        display: none;
+    }
+    
+    .tl-date-picker-popup.open {
+        display: block;
+    }
+    
+    .month-picker-session,
+    .year-picker-session {
+        display: none;
+    }
+    
+    .month-picker-session.active {
+        display: block;
+    }
+    
+    .year-picker-session.active {
+        display: block;
+    }
+    
+    .date-picker-session.d-none {
+        display: none;
+    }
+    
+    .navigator {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .month-dropdown {
+        font-weight: var(--font-bold);
+        cursor: pointer;
+    }
+    
+    .arrows {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .arrows>div {
+        margin: 0px 2px;
+    }
+    
+    .arrows>div::before {
+        font-family: "feather";
+        font-size: var(--arrow-font-size);
+        cursor: pointer;
+    }
+    
+    .arrows>div:hover::before {
+        background-color: var(--hover-bg-color);
+    }
+    
+    .go-up::before {
+        content: "\e914";
+    }
+    
+    .go-down::before {
+        content: "\e90c";
+    }
+    
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    
+    ul {
+        height: calc((var(--popup-width) - var(--popup-x-padding) * 2) / 7);
+    }
+    
+    ul>li {
+        user-select: none;
+        -webkit-user-select: none;
+        position: relative;
+        display: inline-block;
+        width: var(--cell-size);
+        height: var(--cell-size);
+        cursor: pointer;
+    }
+    
+    .calendar-body-container {
+        // Maximum row of body is 6 (6 weeks to show)
+        width: 100%;
+        height: calc((var(--popup-width) - var(--popup-x-padding) * 2) / 7 * 6); 
+        position: absolute;
+        z-index: 1;
+        background-color: var(--popup-bg-color);
+        overflow: hidden;
+    }
+    
+    .calendar-body>ul>li>div:hover {
+        background-color: var(--hover-bg-color);
+    }
+    
+    .calendar-body>ul>li>div.active {
+        background-color: var(--active-bg-color);
+        color: var(--text-color);
+    }
+    
+    .calendar-body>ul>li>div.out-of-month {
+        color: lightgray;
+    }
+
+    .calendar-body>ul>li>div.out-of-range {
+        user-select: none;
+        cursor: default;
+        opacity: 0.2 !important;
+
+        &:hover {
+            background-color: var(--popup-bg-color);
+        }
+    }
+    
+    ul>li>div {
+        width: 100%;
+        height: calc((var(--popup-width) - var(--popup-x-padding) * 2) / 7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+    }
+    
+    .t7 {
+        color: #07B7EE;
+    }
+    
+    .cn {
+        color: #EF2B58;
+    }
+    
+    .weekday-header {
+        font-weight: var(--font-bold);
+    }
+    
+    .calendar-body {
+        position: absolute;
+        bottom: 0px;
+        // animation: slide-up .25s linear;
+    }
+    
+    .tl-datepicker-direction:checked ~ .tl-date-picker-popup>.calendar-body-container>.calendar-body {
+        top: 0px;
+        // animation: slide-down .25s linear;
+    }
+    
+    .slide-up {
+        animation: slide-up .25s linear;
+    }
+    
+    .slide-down {
+        animation: slide-down .25s linear;
+    }
+    
+    .footer-wrapper {
+        width: calc(var(--popup-width) - var(--popup-x-padding) * 2);
+        position: absolute;
+        bottom: var(--popup-x-padding);
+        left: var(--popup-x-padding);
+        background-color: var(--popup-bg-color) !important;
+    }
+    
+    .cdp-footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .today, .clear {
+        width: 30%;
+        height: var(--cell-size);
+        border-radius: calc(var(--cell-size) / 2);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .today {
+        background-color: #F37540;
+    }
+    
+    .digi-watch {
+        //to do
+    }
+    
+    .clear {
+        background-color: brown;
+    }
+
+}
+
+@keyframes slide-down {
+    from {
+        top: calc(var(--scroll-distance) * -1);
+    }
+    to {
+        top: 0px
+    }
+}
+
+@keyframes slide-up {
+    from {
+        top: 0px;
+    }
+    to {
+        top: calc(var(--scroll-distance) * -1);
+    }
+}

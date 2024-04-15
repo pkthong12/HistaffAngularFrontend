@@ -1,0 +1,54 @@
+.me {
+
+    height: auto;
+    padding: auto;
+
+    .main-message {
+        max-width: 480px;
+        font-size: 15px;
+        height: 80px;
+        line-height: 80px;
+    }
+
+    .track {
+
+        height: 25px;
+        width: 500px;
+        background-color: lightgrey;
+        border-radius: 12.5px;
+
+        .outer-percent, .inner-percent {
+            top: 5px;
+            left: 5px;
+            height: 15px;
+            transition: width 0.5s linear;
+            border-radius: 7.5px;
+        }
+
+        /*
+        .outer-percent {
+            transition: width 0.5s linear;
+        }
+        */
+    }
+
+    .message {
+        max-width: 500px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 13px;
+    }
+
+    .close-wrapper {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        cursor: pointer;
+
+        & i {
+            color: #848484;
+            font-size: 24px;
+        }
+    }
+}

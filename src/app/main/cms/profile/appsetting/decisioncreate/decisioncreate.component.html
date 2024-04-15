@@ -1,0 +1,122 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Hồ sơ <i
+              class="fa fa-angle-double-right" aria-hidden="true"></i>Thiết lập
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/attendance/list/holiday'>Thiết lập quy tắc sinh số quyết định</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+        (dataStateChange)="dataStateChange($event!)" rowHeight='37'
+        headerHeight='42' [height]='configs.height()' [allowPaging]='true'
+        [pageSettings]='configs.pageSettings' [enableHover]='true'
+        (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+        allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true'
+        [selectionSettings]='configs.selectionSettings'
+        [editSettings]='configs.editSettings'
+        (rowSelecting)="setButtonStatus($event!)"
+        (rowDeselecting)="setButtonStatus($event!)"
+        [allowFiltering]='true'>
+        <e-columns>
+          <e-column type='checkbox' [showInColumnChooser]='false'
+            [allowFiltering]='false' [allowSorting]='false' width='50'
+            textAlign="Center" [allowEditing]="false">
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false'
+            headerText='ID' [isPrimaryKey]='true' [allowEditing]="false">
+          </e-column>
+          <e-column field='typeDecision' headerTextAlign="Center" textAlign="Left"
+            headerText="Loại" clipMode='EllipsisWithTooltip' width="100"></e-column>
+
+          <e-column field='type1' headerTextAlign="Center" textAlign="Left"
+            headerText="Mã 1" clipMode='EllipsisWithTooltip' width="100"></e-column>
+
+          <e-column [isPrimaryKey]='true' width="100" field='isOrg' textAlign="Center"
+            headerText="Theo phòng ban">
+            <ng-template #template let-data>
+              <ejs-checkbox [ngModel]="data.isOrg">
+              </ejs-checkbox>
+            </ng-template>
+          </e-column>
+
+          <e-column field='character1' headerTextAlign="Center" textAlign="Left"
+            headerText="Ký tự 1" clipMode='EllipsisWithTooltip' width="100"></e-column>
+
+
+            <e-column field='type2' textAlign="Center" headerText="Mã 2"
+            clipMode='EllipsisWithTooltip' width="100">
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.type2 === 'YYYY'">
+                  <span>Theo năm</span>
+                </div>
+                <div class="status-not-effect text-center"
+                  *ngIf="data.type2 !== 'YYYY'">
+                  <span>Theo năm tháng</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+
+          <e-column field='character2' headerTextAlign="Center" textAlign="Left"
+            headerText="Ký tự 2" clipMode='EllipsisWithTooltip' width="100"></e-column>
+
+            <e-column field='type3' textAlign="Center" headerText="Mã 3"
+            clipMode='EllipsisWithTooltip' width="100">
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.type3 === 'NODECISION'">
+                  <span>Số thứ tự theo quyết định</span>
+                </div>
+                <div class="status-not-effect text-center"
+                  *ngIf="data.type3 !== 'NODECISION'">
+                  <span>Số thứ tự theo phòng ban</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+          <e-column field='isActive' textAlign="Center" headerText="Trạng thái"
+            clipMode='EllipsisWithTooltip' width="100">
+            <ng-template #template let-data>
+              <div class="row-status full-width">
+                <div class="status-effect text-center" *ngIf="data.isActive === true">
+                  <span>Hiệu lực</span>
+                </div>
+                <div class="status-not-effect text-center"
+                  *ngIf="!data.isActive === true">
+                  <span>Không hiệu lực</span>
+                </div>
+              </div>
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL-->
+

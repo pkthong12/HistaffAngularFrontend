@@ -1,0 +1,12 @@
+<div class="core-radio-group-container">
+
+    <div class="flex-container" [class.vertical]="!!vertical">
+
+        <label *ngFor="let option of options" class="core-radio-item" (click)="onLabelClick(option)"
+            [class.form-control-disabled]="disabled" [class.checked]="option.value===value">
+            <a class="checkmark"></a>
+            {{ option.text | translate: lang}}
+        </label>
+
+    </div>
+</div>

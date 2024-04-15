@@ -1,0 +1,122 @@
+<div #container class="core-form-control-seeker-container">
+    <div class="input-wrapper" [class.d-none]="!!multiMode">
+        <label #shownText type="text" class="text form-control" [class.form-control-disabled]="disabled">
+            <span [appTooltip]="valueToShow">{{ valueToShow }}</span>
+        </label>
+        <div class="clear-icon-wrapper" *ngIf="!!!multiMode" [class.d-none]="!!disabled || !!!value"
+            (click)="onClickClear()">
+            <div class="flex-wrapper" [appTooltip]="'UI.CORE_CONTOL_COMMON_CLEAR' | translate: lang">
+                <i class="feather-x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="seeker-icon-wrapper" [class.multi-mode]="!!multiMode" (click)="onClickSeek()">
+        <div class="flex-wrapper" [class.form-control-disabled]="disabled">
+            <i class=""></i>
+        </div>
+    </div>
+    <div class="core-tabbe-wrapper" *ngIf="multiMode">
+        <core-table [columns]="multiModeColumns" [data]="selectedData" [showTools]="!!!disabled" [tools]="tools"
+            [searchSwitchDisabled]="true" (onToolClick)="onToolClick($event)"></core-table>
+    </div>
+
+    <div class="modal-container" *ngIf="!!sourceOpen">
+        <div class="modal-content">
+            <div class="modal-header-panel">
+                <core-page-header [title]="title" [hideButtonGroup]="true" *ngIf="showPageHeader"></core-page-header>
+            </div>
+            <div class="source-container">
+                <i class="feather-x" (click)="onCancel()"
+                    [class.d-block]="seekerSourceType==='ORGANIZATION_UNIT_SEEK'"></i>
+
+                <ng-container *ngIf="seekerSourceType === 'EMPLOYEE_SEEK'">
+                    <ng-container *ngTemplateOutlet="employeeSeek">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="seekerSourceType === 'CONTRACT_SEEK'">
+                    <ng-container *ngTemplateOutlet="contractSeek">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="seekerSourceType === 'WORKING_SEEK'">
+                    <ng-container *ngTemplateOutlet="workingSeek">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="seekerSourceType === 'WAGE_SEEK'">
+                    <ng-container *ngTemplateOutlet="wageSeek">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="seekerSourceType === 'ORGANIZATION_UNIT_SEEK'">
+                    <ng-container *ngTemplateOutlet="organizationUnitSeek">
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="seekerSourceType === 'POSITION_SEEK'">
+                    <ng-container *ngTemplateOutlet="positionSeek">
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="seekerSourceType === 'POSITION_CONCURRENT_SEEK'">
+                    <ng-container *ngTemplateOutlet="positionConcurrentSeek">
+                    </ng-container>
+                </ng-container>
+
+            </div>
+            <div *ngIf="!!!hideFooter" class="footer">
+                <div class="d-flex-end">
+                    <button class="btn btn-orange-color" type="button" (click)="onSelect()">{{
+                        'UI_CORE_CONFIRM_DIALOG_BUTTON_SELECT' | translate: lang }}</button>
+                    <button class="btn btn-secondary" type="button" (click)="onCancel()">{{
+                        'UI_CORE_CONFIRM_DIALOG_BUTTON_CANCEL' | translate: lang }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #employeeSeek>
+    <core-employee-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-employee-seeker>
+</ng-template>
+
+<ng-template #contractSeek>
+    <core-contract-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-contract-seeker>
+</ng-template>
+
+<ng-template #workingSeek>
+    <core-working-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-working-seeker>
+</ng-template>
+
+<ng-template #wageSeek>
+    <core-wage-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-wage-seeker>
+</ng-template>
+
+<ng-template #positionSeek>
+    <core-position-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-position-seeker>
+</ng-template>
+
+<ng-template #positionConcurrentSeek>
+    <core-position-concurrent-seeker [preDefinedOuterParam$]="preDefinedOuterParam$" [multiMode]="multiMode"
+        (rowDoubleClick)="onRowDoubleClick($event)" (columnsInit)="onColumnsInit($event)"
+        (selectedDataChange)="onSelectedDataChange($event)"></core-position-concurrent-seeker>
+</ng-template>
+
+<ng-template #organizationUnitSeek>
+    <core-org-unit-seeker (itemDoubleClick)="onItemDoubleClick($event)"></core-org-unit-seeker>
+</ng-template>
+
+<ng-template #avatar let-avatar="context.avatar">
+    <img *ngIf="avatar != null" [src]="avatar | mapAvatarToServer" class="in-table-avatar" appImageErrorResolver>
+    <img *ngIf="avatar == null" [src]="defaultAvatar" class="in-table-avatar" appImageErrorResolver>
+  </ng-template>

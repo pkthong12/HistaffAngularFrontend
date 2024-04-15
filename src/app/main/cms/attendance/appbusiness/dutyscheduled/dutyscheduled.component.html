@@ -1,0 +1,348 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Công <i
+              class="fa fa-angle-double-right" aria-hidden="true"></i>Nghiệp
+            vụ
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/profile/appbusiness/shiftsort'>Xếp ca trực</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <!-- spliter -->
+      <ejs-splitter #horizontal width='100%'>
+        <e-panes>
+          <e-pane size='270px'  max='40%'>
+            <ng-template #content>
+              <!-- <div class="row pt-1 ">
+                <div class="col-sm-12">
+                  <div class="form-inline row">
+                    <label class="col-sm-5 form-label required">Năm</label>
+                    <div class="col-sm-7">
+                      <ejs-numerictextbox name="year" [(ngModel)]="model.yearId"
+                        min="2000" max="2050" format='####'
+                        (change)="changeYear($event!)">
+                      </ejs-numerictextbox>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-inline row">
+                    <label class="col-sm-5 form-label required">Kỳ lương</label>
+                    <div class="col-sm-7">
+                      <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId'
+                        [(ngModel)]="model.periodId" [fields]='fields'
+                        (change)="changePeriod($event!)">
+                      </ejs-dropdownlist>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div> -->
+              <cms-app-org></cms-app-org>
+
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <ejs-grid #overviewgrid id='overviewgrid'
+                [dataSource]='data | async' [height]='configs.height()'
+                rowHeight='37' headerHeight='42' [allowPaging]='true'
+                [pageSettings]='configs.pageSettings' [enableHover]='true'
+                [allowSorting]='true' allowResizing='true'
+                (dataStateChange)="dataStateChange($event!)"
+                [locale]='configs.currentLang' [allowSelection]='true'
+                [selectionSettings]='selectionOptions' [allowFiltering]='true'
+                [allowTextWrap]="true" [textWrapSettings]="configs.wrapSettings"
+                (queryCellInfo)='customiseCell($event!)' [enableHover]="false"
+                [allowFiltering]='true'>
+                <e-columns>
+                  <e-column type='checkbox' [showInColumnChooser]='false'
+                      [allowFiltering]='false' [allowSorting]='false' width='50'
+                      textAlign="Center" [allowEditing]="false" isFrozen="true">
+                    </e-column>
+                  <e-column field='EMPLOYEE_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='EMPLOYEE_CODE' textAlign="Left"
+                  headerTextAlign="Center" headerText="Mã"
+                  clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+                </e-column>
+                  <e-column field='EMPLOYEE_NAME' textAlign="Left"
+                  headerTextAlign="Center" headerText="Tên"
+                  clipMode='EllipsisWithTooltip' width="200" isFrozen="true">
+                </e-column>
+
+                  <e-column field='ORG_NAME' textAlign="Left"
+                  headerTextAlign="Center" width="120" headerText="Phòng ban"
+                  clipMode='EllipsisWithTooltip'>
+                </e-column>
+                  <e-column field='POSITION_NAME' textAlign="Left"
+                    headerTextAlign="Center" headerText="Chức danh"
+                    clipMode='EllipsisWithTooltip' width="120" >
+                  </e-column>
+                  <e-column field='DAY1_CODE' textAlign="Center" headerText="01"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+
+                  <e-column field='DAY2_CODE' textAlign="Center" headerText="02"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY3_CODE' textAlign="Center" headerText="03"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY4_CODE' textAlign="Center" headerText="04"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY5_CODE' textAlign="Center" headerText="05"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY6_CODE' textAlign="Center" headerText="06"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY7_CODE' textAlign="Center" headerText="07"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY8_CODE' textAlign="Center" headerText="08"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY9_CODE' textAlign="Center" headerText="09"
+                    clipMode='EllipsisWithTooltip' width="55"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY10_CODE' textAlign="Center"
+                    headerText="10" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY11_CODE' textAlign="Center"
+                    headerText="11" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY12_CODE' textAlign="Center"
+                    headerText="12" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY13_CODE' textAlign="Center"
+                    headerText="13" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY14_CODE' textAlign="Center"
+                    headerText="14" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY15_CODE' textAlign="Center"
+                    headerText="15" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY16_CODE' textAlign="Center"
+                    headerText="16" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY17_CODE' textAlign="Center"
+                    headerText="17" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY18_CODE' textAlign="Center"
+                    headerText="18" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY19_CODE' textAlign="Center"
+                    headerText="19" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY20_CODE' textAlign="Center"
+                    headerText="20" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY21_CODE' textAlign="Center"
+                    headerText="21" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY22_CODE' textAlign="Center"
+                    headerText="22" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY23_CODE' textAlign="Center"
+                    headerText="23" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY24_CODE' textAlign="Center"
+                    headerText="24" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY25_CODE' textAlign="Center"
+                    headerText="25" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY26_CODE' textAlign="Center"
+                    headerText="26" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY27_CODE' textAlign="Center"
+                    headerText="27" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY28_CODE' textAlign="Center"
+                    headerText="28" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY29_CODE' textAlign="Center"
+                    headerText="29" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY30_CODE' textAlign="Center"
+                    headerText="30" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY31_CODE' textAlign="Center"
+                    headerText="31" clipMode='EllipsisWithTooltip' width="64"
+                    [allowFiltering]="false" [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY1_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY3_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY4_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY5_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY6_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY7_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY8_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY9_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY10_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY11_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY12_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY13_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY14_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY15_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY16_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY17_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY18_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY19_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY20_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY21_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY22_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY23_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY24_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY25_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY26_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY27_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY28_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY29_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY30_ID' [visible]='false'>
+                  </e-column>
+                  <e-column field='DAY31_ID' [visible]='false'>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </ng-template>
+          </e-pane>
+          <e-pane size='230px' [collapsible]='true'>
+            <ng-template #content>
+              <form name="editForm" [formGroup]="editForm" novalidate>
+                <div class="row pt-4">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required"
+                        for="maxValue">Năm</label>
+                      <ejs-numerictextbox name="year" formControlName="yearId"
+                        [(ngModel)]="model.yearId" min="2000" max="2050"
+                        format='####' (change)="changeYear($event!)">
+                      </ejs-numerictextbox>
+                      <span class="input-error"
+                        *ngIf="editForm.get('yearId')!.hasError('required') && !editForm.get('yearId')!.untouched">
+                        Bắt buộc nhập
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required" for="periodId">Kỳ
+                        lương</label>
+                      <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId'
+                        formControlName="periodId" [(ngModel)]="model.periodId"
+                        [fields]='fields' (change)="changePeriod($event!)">
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.get('periodId')!.hasError('required') && !editForm.get('periodId')!.untouched">
+                        Bắt buộc chọn
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<cms-app-modalsshiftsort id="cms-app-modalsshiftsort"></cms-app-modalsshiftsort>
+<input id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+  <gohr-confirm-modal id="confirm-import-modal">
+    <div class="row full-width gohr-modal-header">
+      Xác nhận Import
+    </div>
+    <div class="row full-width gohr-modal-footer text-center">
+      <button class="btn btn-primary" (click)="confirmImport('ok')">Đồng
+        ý</button>
+      <button class="btn btn-default"
+        (click)="confirmImport('cancel')">Hủy</button>
+    </div>
+  </gohr-confirm-modal>

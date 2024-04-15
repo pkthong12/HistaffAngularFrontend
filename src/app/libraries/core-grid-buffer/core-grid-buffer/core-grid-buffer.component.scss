@@ -1,0 +1,20 @@
+.core-grid-buffer-container {
+    & .grid-buffer-submit {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--color-basic-blue);
+        margin-bottom: calc( var(--size-left-bar-block-cell-spacing) * 2);
+        cursor: pointer;
+
+        & i {
+            font-size: 20px;
+            color: white;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1V15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8L8 15L1 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+            background-repeat: no-repeat;
+            width: 28px;
+            height: 16px;
+            margin-left: 7px;
+        }
+    }
+}

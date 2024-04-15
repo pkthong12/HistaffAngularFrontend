@@ -1,0 +1,136 @@
+@import url('../../../assets/css/feather.css');
+
+.pagination-container {
+
+    --bg: #848484;
+    --color: white;
+    --height: 30px;
+    --button-size: 50px;
+    --font-size: 18px;
+    --aperture-size: 36px;
+
+    @keyframes rotate-current-content-fw {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+        
+    }
+
+    @keyframes rotate-current-content-bw {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(-360deg);
+        }
+        
+    }
+
+    .add::before {
+        font-family: "feather";
+        content: "\e9b1";
+        font-weight: 700;
+        font-size: var(--font-size);
+        color: white;
+        background: var(--bg);
+        width: var(--button-size);
+        height: var(--button-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
+
+    .pagination-container {
+        height: var(--height);
+        display: flex;
+
+        >div {
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 2px;
+        }
+
+        .disable {
+            cursor: default;
+            opacity: 0.5 !important;
+        }
+
+        .current {
+            border-radius: 50%;
+            margin: 0px 5px;
+            opacity: 1;
+            transition: 2s;
+        }
+
+        .aperture {
+            width:  var(--aperture-size);
+            height: var(--aperture-size);
+            &::before {
+                font-size: var(--aperture-size);
+            }
+            animation: 1s infinite linear;
+            opacity: 0;
+            transition: .25s ease-out;
+        }
+
+        .visible {
+            opacity: 1;
+            transition: .25s ease-out;
+        }
+
+        .current,
+        .loading {
+            width: var(--button-size);
+            height: var(--button-size);
+            background: var(--bg);
+            color: var(--color);
+        }
+
+        .current-text {
+            position: absolute;
+        }
+
+        .current>div {
+            width: var(--button-size);
+            height: var(--button-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div::before {
+            font-family: "feather";
+            font-size: var(--font-size);
+            width: var(--button-size);
+            height: var(--button-size);
+            background: var(--bg);
+            color: var(--color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .first::before {
+            content: "\e933";
+        }
+
+        .previous::before {
+            content: "\e92f";
+        }
+
+        .next::before {
+            content: "\e930";
+        }
+
+        .last::before {
+            content: "\e934";
+        }
+
+    }
+
+}

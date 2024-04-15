@@ -1,0 +1,116 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Lương <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i>Nghiệp vụ
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i> <span class="brackcrum-active">Import lương</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="importpayroll" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal>
+        <e-panes>
+          <e-pane size='270px' min='20%' max='40%' [collapsible]='true'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template> 
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data |async' rowHeight='37' headerHeight='42'
+                (dataStateChange)="dataStateChange($event!)" [height]='configs.height()' [allowPaging]='true'
+                [pageSettings]='configs.pageSettings' [enableHover]='true' allowResizing='true' [allowExcelExport]='true'
+                [locale]='configs.currentLang' [allowSelection]='true' [allowFiltering]='true' [allowTextWrap]="true"
+                [textWrapSettings]="configs.wrapSettings" [enableHover]="false" [allowFiltering]='true'
+                [frozenColumns]='4'>
+                <e-columns>
+
+                </e-columns>
+                <e-aggregates>
+                  <e-aggregate>
+                    <e-columns>
+                      <e-column field="SAL_FINAL" type="sum">
+                        <ng-template #footerTemplate let-data>{{data.sum | number}}</ng-template>
+                      </e-column>
+                    </e-columns>
+                  </e-aggregate>
+                </e-aggregates>
+              </ejs-grid>
+            </ng-template>
+          </e-pane>
+          <e-pane size='230px' [collapsible]='true'>
+            <ng-template #content>
+              <form name="editForm" [formGroup]="editForm" novalidate>
+                <div class="row pt-4">
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required" for="maxValue">Năm</label>
+                      <ejs-dropdownlist id='yearId' [dataSource]='lstYear' formControlName="yearId"
+                        [(ngModel)]="model.yearId" [fields]='fields' (change)="changeYear($event!)">
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.get('yearId')!.hasError('required') && !editForm.get('yearId')!.untouched">
+                        Bắt buộc nhập
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required" for="periodId">Kỳ
+                        lương</label>
+                      <ejs-dropdownlist id='periodId' [dataSource]='lstPeriodId' formControlName="periodId"
+                        [(ngModel)]="model.periodId" [fields]='fields' (change)="changePeriod($event!)">
+                      </ejs-dropdownlist>
+                      <span class="input-error"
+                        *ngIf="editForm.get('periodId')!.hasError('required') && !editForm.get('periodId')!.untouched">
+                        Bắt buộc chọn
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group vertical">
+                      <label class="e-float-text required">Bảng lương</label>
+                      <ejs-dropdownlist [dataSource]='lstSalaryType' formControlName="salaryTypeId"
+                        [(ngModel)]="model.salaryTypeId" [fields]='fields' (change)="changeSalaryTypeId($event!)">
+                      </ejs-dropdownlist>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>
+<input id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<gohr-confirm-modal id="confirm-import-modal">
+  <div class="row full-width gohr-modal-header">
+    Xác nhận Import
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+<gohr-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width gohr-modal-header">
+    Bạn có chắc chắn muốn xóa không ?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

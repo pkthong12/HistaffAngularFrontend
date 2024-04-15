@@ -1,0 +1,43 @@
+.app-sys-function-action-mapper-container {
+    & .popup-header {
+        @media(max-width: 992px) {
+            width: 100%;
+        }
+        &>.custom-header-popup{
+            display: flex;
+        }
+        &>i{
+            display: block;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            margin:10px; 
+        }
+        &> caption {
+            display: block;
+            width: 100%;
+            color: #464646;
+            font-weight: 700;
+        }
+    }
+
+    & .function-header {
+        & .function-header-item>* {
+            width: 30%;
+
+            &:last-child {
+                font-weight: 700;
+            }
+        }
+    }
+
+    & .content-body {
+        &>* {
+            width: 300px;
+
+            &:last-child {
+                width: 150px;
+            }
+        }
+    }
+}

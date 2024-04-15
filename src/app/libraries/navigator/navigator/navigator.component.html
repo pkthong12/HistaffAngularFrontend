@@ -1,0 +1,42 @@
+<div class="navigator-container">
+
+    <div class="input-search-container" [class.opacity0]="!!leftbarReduced">
+        <input id="navigator-search" placeholder="Tìm kiếm ..." type="text" [(ngModel)]="searchFor"
+        (ngModelChange)="onSearchChange($event)">
+        <div class="search-clear-wrapper" *ngIf="!!searchFor.length" (click)="clearSearch()">
+            <i class="feather-x"></i>
+        </div>
+    </div>
+
+    <div id="nav">
+        <core-loading-surface *ngIf="loading"></core-loading-surface>
+        <ul id="main-menu" #mainMenu [ngStyle]="{ padding: 0}">
+            <!-- <li id="first-menu-item" class="first-menu-iem"><a title="Go to home page" routerLink="/">
+                    <span id="logo-menu">
+                        <ng-container [ngTemplateOutlet]="logoTemplate"></ng-container>
+                    </span>
+                    &nbsp;</a>
+            </li> -->
+            <ng-container *ngIf="items?.length">
+                <ng-container *ngFor="let item of items">
+                    <app-item [item]="item" [level]="1"></app-item>
+                </ng-container>
+
+            </ng-container>
+
+            <li class="parent right-part-item" *ngIf="!!rightIcon">
+                <a (click)="rightIcon.function()" class="no-vertical-padding">
+                    <div class="right-icon-wrapper">
+                        <i [class]="'right-icon ' + rightIcon.featherClass"></i>
+                        <div class="right-icon-badge">
+                            {{ rightIcon.badgeCount }}
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <div class="histaff-logo">
+                 <img src="../../../assets/icon/histaff-logo-new.svg" class="img">
+            </div>
+        </ul>
+    </div>
+</div>

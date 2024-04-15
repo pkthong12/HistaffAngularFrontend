@@ -1,0 +1,29 @@
+export interface IAtTimesheetMachine {
+  id: number;
+  tenantId?: number;
+  periodId?: number;
+  employeeId?: number;
+  workingday?: Date;
+  timetypeId?: number;
+  timePoint1?: string;
+  timePoint4?: string;
+  timePointOt?: string;
+  otStart?: string;
+  otEnd?: string;
+  otLateIn?: number;
+  otEarlyOut?: number;
+  otTime?: number;
+  otTimeNight?: number;
+  isRegisterOff?: boolean;
+  isRegisterLateEarly?: boolean;
+  isHoliday?: boolean;
+  lateIn?: number;
+  earlyOut?: number;
+  hoursStart?: number;
+  hoursStop?: number;
+  isEditIn?: boolean;
+  isEditOut?: boolean;
+  note?: string;
+  morningId?: number;
+  afternoonId?: number;
+}

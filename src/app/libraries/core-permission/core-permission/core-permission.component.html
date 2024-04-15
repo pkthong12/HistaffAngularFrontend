@@ -1,0 +1,54 @@
+<div #container class="core-permission-container" [ngStyle]="{ height: height + 'px'}">
+  <core-page-header [title]="title" (buttonClick)="onCorePageHeaderButtonClick($event)"></core-page-header>
+
+  <core-composition [left]="userSeeker" [leftWidth]="200" [main]="tabs" [height]="compositionHeight">
+  </core-composition>
+
+  <div class="state-tracker container container-fluid" *ngIf="showStateTracker && isRootUser">
+    <div class="w-100 d-flex d-flex-between">
+      <span>Compare</span>
+      <i class="feather-x" (click)="onClickCloseState()"></i>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        {{ initialActionPermissionValueJsonString }}
+      </div>
+      <div class="col-md-6">
+        {{ currentActionPermissionValueJsonString }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        {{ initialOrgPermissionValueJsonString }}
+      </div>
+      <div class="col-md-6">
+        {{ currentOrgPermissionValueJsonString }}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #tabs>
+  <core-tabs [headers]="tabHeaders" [contents]="[tab1, tab2]" [height]="compositionHeight"></core-tabs>
+</ng-template>
+
+<ng-template #tab1>
+  <div [ngStyle]="{ height: layoutService.basicSpacing + 'px' }"></div>
+  <core-permission-actions [loading]="loading" [(ngModel)]="actionPermissionValue"
+    (ngModelChange)="onActionPermissionValueChange($event)" [disabled]="!!!allowEdit" [height]="corePermissionActionsHeight"></core-permission-actions>
+</ng-template>
+
+<ng-template #userSeeker>
+
+  <core-list-lazy [queryListApi]="objectQueryListApi" [textField]="objectListTextField" [(ngModel)]="objectId"
+    (ngModelChange)="onObjectIdChange($event)" [height]="compositionHeight"></core-list-lazy>
+
+
+</ng-template>
+
+<ng-template #tab2>
+  <div [ngStyle]="{ height: layoutService.basicSpacing + 'px' }"></div>
+  <core-org-tree [fullWidthMode]="true" [accessorMode]="treeAccessorMode" [(ngModel)]="orgIds" [disabled]="!!!allowEdit"
+    (itemClick)="onOrgTreeItemCheck($event)" name="orgIds" ngDefaultControl [height]="treeHeight"></core-org-tree>
+</ng-template>

@@ -1,0 +1,112 @@
+<div class="core-query-builder-container">
+  <div *ngIf="isDevMode" class="alert alert-primary">
+    Expression = {{ filterString ? filterString : '()' }}
+  </div>
+  <div class="p-relative">
+
+    <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">
+
+      <ng-template #queryTemplateRef let-filter="filter" let-groupToRemove="groupToRemove">
+
+        <div class="alert alert-dark" role="alert">
+
+          <!-- Main Form Controls -->
+          <div class="row">
+            <div class="col">
+              <!-- <input class="form-control" type="text" [formControl]="filter.get('logicalOperator')" /> -->
+              <select class="form-control" [formControl]="filter.get('logicalOperator')" value="AND">
+                <option value="AND">{{'AND' | translate : lang}}</option>
+                <option value="OR">{{'OR' | translate : lang}}</option>
+              </select>
+            </div>
+            <div class="col p-0">
+              <i [appTooltip]="'ADD_CONDITION_DYNAMIC_REPORT'| translate: lang" style="margin-left: 5px" (click)="addField(filter)" class="btn btn-sm btn-success feather-file-plus">
+                <!-- <span class="glyphicon glyphicon-plus-sign"></span>
+                Add Field -->
+              </i>
+            </div>
+            <div class="col p-0">
+              <i [appTooltip]="'ADD_GROUP_CONDITION_DYNAMIC_REPORT'| translate: lang" style="margin-left: 5px" (click)="addGroup(filter)" class="btn btn-sm btn-success feather-folder-plus">
+                <!-- <span class="glyphicon glyphicon-plus-sign"></span>
+                Add Group -->
+              </i>
+            </div>
+            <div class="col p-0">
+              <i *ngIf="groupToRemove" [appTooltip]="'REMOVE_GROUP_CONDITON_DYNAMIC_REPORT'| translate: lang" style="margin-left: 2px;margin-top:5px" (click)="removeGroup(groupToRemove)"
+                class="btn btn-sm btn-danger feather-trash-2">
+                <!-- <span class="glyphicon glyphicon-minus-sign"></span>
+                Remove Group -->
+              </i>
+            </div>
+          </div>
+
+          <div *ngIf="filter.value.filters && filter.value.filters.length > 0 " class="child-query"
+            formArrayName="filters">
+            <!-- field condition -->
+            <div *ngFor="let childFilter of filter.get('filters').controls; let fieldGroup = index;">
+              <div class="row mt-1" *ngIf="!childFilter.value.logicalOperator; else nestedFilter"
+                style="margin-left: 2%;" [formGroup]="childFilter">
+                <input hidden="true" [value]="columnType" class="form-control" type="text" formControlName="type" />
+                <div class="col" style="margin-right: 5px;">
+                  
+
+                  <select class="form-control" formControlName="name" (ngModelChange)="setValueType($event,childFilter)">
+                    <option *ngFor="let item of totalCols" [value]="item.netType">
+                      {{item.columnName | translate: lang}}
+                      <!-- <input hidden="true" [value]="item.columnType" class="form-control input-sm" type="text" formControlName="type"> -->
+                    </option>
+                  </select>
+                </div>
+                <!-- <input class="form-control input-sm" type="text" formControlName="type"> -->
+                <div class="col"  style="margin-right: 5px;">
+                  <!-- <input class="form-control" type="text" formControlName="relationalOperator" /> -->
+                  <select class="form-control" formControlName="relationalOperator" (ngModelChange)="setRelationalChange($event,childFilter)">
+                    <option *ngFor="let item of relationalOperator" [value]="item.value" [appTooltip]="item.value | translate : lang">
+                      {{item.value | translate : lang}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col"  style="margin-right: 5px;">
+                  <input class="form-control" type="text" formControlName="value" (ngModelChange)="setValueChange($event,childFilter)"/>
+                </div>
+                <div class="col"  style="margin-right: 5px;">
+                  <i [appTooltip]="'REMOVE_CONDITON_DYNAMIC_REPORT'| translate: lang"  style="margin-left: 5px;margin-top:5px" (click)="removeField(filter, fieldGroup)"
+                    class="btn btn-sm btn-danger feather-trash-2">
+                    <!-- <span class="glyphicon glyphicon-minus-sign"></span>
+                    Remove -->
+                  </i>
+                </div>
+              </div>
+
+              <ng-template #nestedFilter>
+                <div class="mt-2" [formGroup]="childFilter">
+                  <ng-container
+                    *ngTemplateOutlet="queryTemplateRef; context: { filter: childFilter, groupToRemove: { group: filter, index: fieldGroup} }">
+                  </ng-container>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-container [ngTemplateOutlet]="queryTemplateRef"
+        [ngTemplateOutletContext]="{ filter: mainForm, groupToRemove: null }">
+      </ng-container>
+
+    </form>
+  </div>
+  <div>
+    <div *ngIf="isDevMode" [ngStyle]="{
+        display: 'block',
+        width: '100%',
+        height: 'auto',
+        whiteSpace: 'pre-wrap',
+        overflowX: 'hidden',
+        overflowY: 'auto'
+      }">
+      {{filterFormJsonString}}
+    </div>
+  </div>
+</div>

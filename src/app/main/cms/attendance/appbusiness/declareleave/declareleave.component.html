@@ -1,0 +1,114 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Chấm công <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i>Nghiệp
+            vụ
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/profile/business/decision'>Khai báo, điều chỉnh nghỉ phép</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="declareleave" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <div class="app-content">
+      <div id='container'>
+        <ejs-splitter #splitterInstance id="nested-splitter" (created)='onCreated()' height='100%' width='100%'>
+          <e-panes>
+            <e-pane size='270px' max='40%'>
+              <ng-template #content>
+                <div id='vertical_splitter' class="vertical_splitter">
+                  <div>
+                    <div class="content">
+                      <cms-app-org></cms-app-org>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content content-checkbox">
+                      <ejs-checkbox label="Cả nhân viên nghỉ việc" (change)="GetEmp($event!)" [checked]="false">
+                      </ejs-checkbox>
+                      <div class="bg-ter"></div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </e-pane>
+            <e-pane>
+              <ng-template #content>
+                <div class="list-grid">
+                  <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async'
+                    (dataStateChange)="dataStateChange($event!)" rowHeight='35' headerHeight='40'
+                    [height]='configs.height()' [allowPaging]='true' [pageSettings]='configs.pageSettings'
+                    [enableHover]='true' (recordDoubleClick)="viewRecord($event!)" [allowSorting]='true'
+                    allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true'
+                    [showColumnChooser]='true' [selectionSettings]='configs.selectionSettings'
+                    [editSettings]='configs.editSettings' [allowFiltering]='true'>
+                    <e-columns>
+                      <e-column type='checkbox' [showInColumnChooser]='false' [allowFiltering]='false'
+                        [allowSorting]='false' width='40' textAlign="Center" [allowEditing]="false">
+                      </e-column>
+                      <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID'
+                        [isPrimaryKey]='true' [allowEditing]="false">
+                      </e-column>
+                      <!--  -->
+                      <e-column field='employeeCode' textAlign="Center" headerText="Mã NV" headerTextAlign="Center"
+                        clipMode='EllipsisWithTooltip' width='120'></e-column>
+                      <e-column field='employeeName' textAlign="Left" headerText="Họ và tên"
+                        clipMode='EllipsisWithTooltip'></e-column>
+                      <e-column field='orgName' textAlign="Left" headerText="Phòng ban" clipMode='EllipsisWithTooltip'>
+                      </e-column>
+                      <e-column field='positionName' textAlign="Left" headerText="Chức danh"
+                        clipMode='EllipsisWithTooltip'></e-column>
+                      <e-column field='year' textAlign="Left" headerText="Năm" clipMode='EllipsisWithTooltip'
+                        width="190">
+                      </e-column>
+                      <e-column field='month' textAlign="Left" headerText="Tháng" clipMode='EllipsisWithTooltip'
+                        width="215">
+                      </e-column>
+                      <e-column field='numberChange' textAlign="Left" headerText="Số phép điều chỉnh"
+                        clipMode='EllipsisWithTooltip' width="215">
+                      </e-column>
+                      <e-column field='note' textAlign="Left" headerText="Ghi chú" clipMode='EllipsisWithTooltip'>
+                      </e-column>
+                    </e-columns>
+                  </ejs-grid>
+                </div>
+              </ng-template>
+            </e-pane>
+          </e-panes>
+        </ejs-splitter>
+      </div>
+    </div>
+
+  </div>
+</div>
+<input id="file" type="file" name="name"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  style="display: none;" (change)='inputFile($event!)' />
+<gohr-confirm-modal id="confirm-import-modal">
+  <div class="row full-width gohr-modal-header">
+    Xác nhận Import
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmImport('ok')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="confirmImport('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+<!-- CONFIRM DELETE MODAL-->
+<gohr-confirm-modal id="confirm-delete-modal">
+  <div class="row full-width gohr-modal-header">
+    Bạn có chắc chắn muốn xóa dữ liệu?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmDelete('ok')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="confirmDelete('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

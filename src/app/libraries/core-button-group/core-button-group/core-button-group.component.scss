@@ -1,0 +1,9 @@
+.core-button-group-container {
+    box-sizing: border-box;
+    margin: 5px;
+    display: flex;
+
+    &>span {
+        margin: 2px;
+    }
+}

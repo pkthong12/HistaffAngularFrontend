@@ -1,0 +1,117 @@
+<ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data | async' rowHeight='37'
+  (dataStateChange)="dataStateChange($event!)" headerHeight='42' [allowPaging]='true'
+  [height]='configs.heightTimeSheet()' [pageSettings]='configs.pageSettings' [enableHover]='true' [allowSorting]='true'
+  allowResizing='true' [locale]='configs.currentLang' [allowSelection]='true' [selectionSettings]='selectionOptions'
+  [allowFiltering]='true' [allowTextWrap]="true" [textWrapSettings]="configs.wrapSettings"
+  (queryCellInfo)='customiseCell($event!)' [enableHover]="false" [allowExcelExport]='true'>
+  <e-columns>
+    <e-column field='EMPLOYEE_ID' [visible]='false'>
+    </e-column>
+    <e-column field='EMPLOYEE_CODE' textAlign="Left" headerTextAlign="Center" headerText="Mã"
+      clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+    </e-column>
+    <e-column field='EMPLOYEE_NAME' textAlign="Left" headerTextAlign="Center" headerText="Tên"
+      clipMode='EllipsisWithTooltip' width="160" isFrozen="true">
+    </e-column>
+    <e-column field='ORG_NAME' textAlign="Left" headerTextAlign="Center" width="120" headerText="Phòng ban"
+      clipMode='EllipsisWithTooltip' isFrozen="true">
+    </e-column>
+    <e-column field='POSITION_NAME' textAlign="Left" headerTextAlign="Center" headerText="Chức danh"
+      clipMode='EllipsisWithTooltip' width="120" isFrozen="true">
+    </e-column>
+    <e-column field='DAY1' textAlign="Center" headerText="01" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY2' textAlign="Center" headerText="02" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY3' textAlign="Center" headerText="03" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY4' textAlign="Center" headerText="04" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY5' textAlign="Center" headerText="05" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY6' textAlign="Center" headerText="06" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY7' textAlign="Center" headerText="07" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY8' textAlign="Center" headerText="08" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY9' textAlign="Center" headerText="09" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY10' textAlign="Center" headerText="10" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY11' textAlign="Center" headerText="11" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY12' textAlign="Center" headerText="12" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY13' textAlign="Center" headerText="13" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY14' textAlign="Center" headerText="14" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY15' textAlign="Center" headerText="15" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY16' textAlign="Center" headerText="16" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY17' textAlign="Center" headerText="17" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY18' textAlign="Center" headerText="18" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY19' textAlign="Center" headerText="19" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY20' textAlign="Center" headerText="20" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY21' textAlign="Center" headerText="21" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY22' textAlign="Center" headerText="22" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY23' textAlign="Center" headerText="23" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY24' textAlign="Center" headerText="24" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY25' textAlign="Center" headerText="25" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY26' textAlign="Center" headerText="26" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY27' textAlign="Center" headerText="27" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY28' textAlign="Center" headerText="28" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY29' textAlign="Center" headerText="29" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY30' textAlign="Center" headerText="30" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+    <e-column field='DAY31' textAlign="Center" headerText="31" clipMode='EllipsisWithTooltip' width="70"
+      [allowFiltering]="false" [visible]='false'>
+    </e-column>
+  </e-columns>
+</ejs-grid>
+<cms-app-modalstimesheet id="cms-app-modalstimesheet"></cms-app-modalstimesheet>

@@ -1,0 +1,4 @@
+<div class="core-button-container d-flex-center" (click)="onButtonClick()">
+    <i [class]="data.iconClass"></i>
+    <span class="button-caption" *ngIf="showCaption">{{ data.code | translate: lang }}</span>
+</div>

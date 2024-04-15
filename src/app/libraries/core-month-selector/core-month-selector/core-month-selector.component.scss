@@ -1,0 +1,201 @@
+.core-month-picker-container {
+    --bg: white;
+    --width: 276px;
+    --header-height: 60px;
+    --height: calc(var(var(--header-height)) + 39.42px * 7);
+    --hover-bg-color: #358ccb;
+    --font-bold: 700;
+    --font-light: 400;
+    --font-size: 13px;
+    --cell-width: calc(var(--width) / 3);
+    --cell-height: 50px;
+    --popup-bg-color: white;
+    --popup-x-padding: 12px;
+    --arrow-font-size: 28px;
+    --cell-size: 39.42857142857143px;
+    --popup-width: 300px;
+    --popup-height: 360px;
+
+    --indicator-height: 29px;
+
+    position: relative;
+    background-color: var(--bg);
+    font-size: var(--font-size);
+
+    @keyframes zoomIn {
+        from {
+            opacity: 0;
+            transform: scale(2);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    * {
+        user-select: none;
+    }
+
+    label.icon {
+        position: absolute;
+        top: 3px;
+        right: 3px
+    }
+    
+    label.icon::before {
+        content: '';
+        display: inline-block;
+        aspect-ratio: 1 / 1;
+        width: var(--indicator-height);
+        height: var(--indicator-height);
+        border-radius: 3px;
+        background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzkiIGhlaWdodD0iMzkiIHZpZXdCb3g9IjAgMCAzOSAzOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjM5IiBoZWlnaHQ9IjM5IiBmaWxsPSIjRjVGNUY1Ii8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF8wXzEpIj4KPHJlY3Qgd2lkdGg9IjE5MjAiIGhlaWdodD0iMTM5NyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyNjggLTg0MikiIGZpbGw9IiNGMUYxRjEiLz4KPHJlY3QgeD0iLTEyNjgiIHk9Ii04NDIiIHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEzOTciIGZpbGw9ImJsYWNrIiBmaWxsLW9wYWNpdHk9IjAuMyIvPgo8cmVjdCB4PSItNjgyIiB5PSItNjU4IiB3aWR0aD0iNzUwIiBoZWlnaHQ9Ijk5OSIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIvPgo8cmVjdCB4PSItMjkwLjUiIHk9Ii0yLjUiIHdpZHRoPSIzMzIiIGhlaWdodD0iNDQiIHJ4PSI0LjUiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNEMUQxRDEiLz4KPHJlY3Qgd2lkdGg9IjM5IiBoZWlnaHQ9IjM5IiByeD0iMyIgZmlsbD0iI0U5RTlFOSIvPgo8cGF0aCBkPSJNMjYuOTAwMSAxMS4wOTkxSDEyLjE5OTdDMTEuMDM5OCAxMS4wOTkxIDEwLjA5OTYgMTIuMDM5MyAxMC4wOTk2IDEzLjE5OTJWMjcuODk5NkMxMC4wOTk2IDI5LjA1OTQgMTEuMDM5OCAyOS45OTk2IDEyLjE5OTcgMjkuOTk5NkgyNi45MDAxQzI4LjA1OTkgMjkuOTk5NiAyOS4wMDAxIDI5LjA1OTQgMjkuMDAwMSAyNy44OTk2VjEzLjE5OTJDMjkuMDAwMSAxMi4wMzkzIDI4LjA1OTkgMTEuMDk5MSAyNi45MDAxIDExLjA5OTFaIiBzdHJva2U9IiM4NDg0ODQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMy43NTA1IDguOTk5NTFWMTMuMTk5NiIgc3Ryb2tlPSIjODQ4NDg0IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTUuMzQ5NiA4Ljk5OTUxVjEzLjE5OTYiIHN0cm9rZT0iIzg0ODQ4NCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEwLjA5OTYgMTcuMzk5NEgyOS4wMDAxIiBzdHJva2U9IiM4NDg0ODQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMF8xIj4KPHJlY3Qgd2lkdGg9IjE5MjAiIGhlaWdodD0iMTM5NyIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMjY4IC04NDIpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==') 0px 50% no-repeat;
+        background-size: cover;
+        cursor: pointer;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul>li {
+        display: inline-block;
+        width: var(--cell-width);
+        cursor: pointer;
+    }
+
+    ul>li>div {
+        width: var(--cell-width);
+        height: var(--cell-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    ul>li>div:hover {
+        color: white;
+        background-color: var(--hover-bg-color);
+    }
+
+    ul>li>div.active {
+        color: white;
+        background-color: cadetblue;
+    }
+
+    .tl-month-picker-popup {
+        position: absolute;
+        right: 0px;
+        overflow: hidden;
+        z-index: var(--popup-z-index);
+        width: var(--popup-width);
+        height: var(--popup-height);
+        background-color: var(--popup-bg-color);
+        box-shadow: var(--decoration-box-shadow);
+        border-radius: 3px;
+        padding: 0px 12px;
+        display: none;
+    }
+
+    .tl-month-picker-popup.open {
+        display: block;
+    }
+
+    .tl-month-picker-emitter-header {
+        position: relative;
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .tl-month-picker-emitter-year {
+            cursor: pointer;
+            font-weight: var(--font-bold);
+        }
+
+        .arrows {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .arrows>div {
+            margin: 0px 2px;
+        }
+
+        .arrows>div {
+            &::before {
+                font-family: "feather";
+                font-size: var(--arrow-font-size);
+                cursor: pointer;
+            }
+        }
+
+        .arrows>div {
+            &:hover::before {
+                background-color: var(--hover-bg-color);
+            }
+        }
+
+        .go-up::before {
+            content: "\e914";
+        }
+
+        .go-down::before {
+            content: "\e90c";
+        }
+
+    }
+
+    .zoom-in {
+        animation: zoomIn 0.25s ease-in;
+    }
+
+    .months-container-wrapper {
+        width: var(--width);
+        height: calc(var(--height) - var(--header-height));
+        overflow: hidden;
+    }
+
+    .cms-footer-wrapper {
+        width: calc(var(--popup-width) - var(--popup-x-padding) * 2);
+        position: absolute;
+        bottom: var(--popup-x-padding);
+        left: var(--popup-x-padding);
+        background-color: var(--popup-bg-color);
+    }
+    
+    .cms-footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .this-month, .clear {
+        width: 30%;
+        height: var(--cell-size);
+        border-radius: calc(var(--cell-size) / 2);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .this-month {
+        background-color: var(--hover-bg-color);
+    }
+    
+    .digi-watch {
+        //to do
+    }
+    
+    .clear {
+        background-color: brown;
+    }
+
+}

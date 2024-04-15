@@ -1,0 +1,21 @@
+<div #container class="pagination-full-container roboto-font d-flex-between">
+    <div class="custom-select-container" *ngIf="!!!fixedPageSize">
+        <label style="color:#848484">{{ 'UI.COMPONENT.CORE-PAGINATION-FULL.VIEW' | translate: lang }}&nbsp;&nbsp;</label>
+        <select class="custom-select" [(ngModel)]="selectedSize" (ngModelChange)="onSizeChange($event)">
+            <option *ngFor="let size of SizeChanger">{{size}}</option>
+        </select>
+        <label style="color:#848484">&nbsp;/{{innerBodyCount$.value}}&nbsp;{{ 'UI.COMPONENT.CORE-PAGINATION-FULL.RESULTS' | translate: lang }}</label>
+    </div>
+    <div class="pagination-container">
+        <div class="first" [class.disable]="!!!pageCount || currentPage$.value===1" (click)="goFirst()"></div>
+        <div class="previous" [class.disable]="!!!pageCount || currentPage$.value===1" (click)="goPrevious()"></div>
+        <div #current *ngFor="let item of displayPageCount" [class.hide-item]="item !== currentPage$.value">
+            <div class="d-flex-center">
+                <span (click)="clickPageNumber(item)"  [class.current]="item == currentPage$.value" [class.not-current]="item !== currentPage$.value">{{ item }}</span>
+
+            </div>
+        </div>
+        <div class="next" [class.disable]="!!!pageCount || currentPage$.value===pageCount" (click)="goNext()"></div>
+        <div class="last" [class.disable]="!!!pageCount || currentPage$.value===pageCount" (click)="goLast()"></div>
+    </div>
+</div>

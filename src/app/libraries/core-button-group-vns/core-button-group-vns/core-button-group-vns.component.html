@@ -1,0 +1,19 @@
+<div class="core-button-group-vns-container">
+    <div class="setting-trigger d-flex d-flex-center" *ngIf="!!isRootUser && !!forHeader" (click)="onMapperClick()"
+        [appTooltip]="'UI_BUTTON_GROUP_SETTING_ADD_REMOVE_ACTION_ITEM_FOR_THIS_SCREEN' | translate : lang" position="left">
+        <i class="feather-settings"></i>
+    </div>
+
+    <div class="separator" *ngIf="!!isRootUser && !!forHeader"></div>
+
+    <ng-container *ngFor="let button of buttons">
+        <ng-container *ngIf="!button.hidden">
+            <core-button-vns [showCaption]="showCaption" [data]="button"
+                [instanceNumber]="instanceNumber"
+                (buttonClick)="onButtonClick($event)"></core-button-vns>
+        </ng-container>
+    </ng-container>
+    
+    <span *ngIf="!!isRootUser && !!forHeader && !!!buttons.length">{{ currentFunctionAssigmentDone ?
+        ('UI_BUTTON_GROUP_NO_ITEM_AVAILABLE_YET' | translate : lang) : '' }}</span>
+</div>

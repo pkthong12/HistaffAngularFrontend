@@ -1,0 +1,58 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Báo cáo <i
+              class="fa fa-angle-double-right" aria-hidden="true"></i>Nghiệp
+            vụ
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active"
+              href='/cms/report/appbusiness/reportchart'>Báo cáo biểu đồ</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <ejs-splitter #horizontal>
+        <e-panes>
+          <e-pane size='250px' max='40%'>
+            <ng-template #content>
+              <cms-app-org></cms-app-org>
+            </ng-template>
+          </e-pane>
+          <e-pane size='270px' max='40%'>
+            <ng-template #content>
+              <ejs-treeview #treeViewReport
+              (nodeSelected)="nodeSelecting($event!)" [fields]='field'>
+            </ejs-treeview>
+            </ng-template>
+          </e-pane>
+          <e-pane>
+            <ng-template #content>
+              <cms-app-reportprofile *ngIf="nodeSelected == 1">
+              </cms-app-reportprofile>
+              <cms-app-reportsalary *ngIf="nodeSelected == 4">
+              </cms-app-reportsalary>
+            
+            </ng-template>
+          </e-pane>
+        </e-panes>
+      </ejs-splitter>
+    </div>
+  </div>
+</div>

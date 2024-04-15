@@ -1,0 +1,15 @@
+<div #container class="core-attachment-container">
+    <input id="rawInput" #rawInput type="file" (change)="handleInputChange($event)">
+    <input class="form-control" type="text" [(ngModel)]="valueToShow" readonly [class.form-control-disabled]="disabled"
+        [appTooltip]="(!!valueToShow && touched) ? 'This file will be uploaded and its path will be assigned to current record' : ''">
+    <div class="upload-icon-wrapper" (click)="onClickUpload()" [class.opacity0]="readonly">
+        <div class="flex-wrapper">
+            <i class=""></i>
+        </div>
+    </div>
+    <div class="download-icon-wrapper" (click)="onClickDownload()" *ngIf="!!valueToShow && !!!touched">
+        <div class="flex-wrapper">
+            <i class="feather-download"></i>
+        </div>
+    </div>
+</div>

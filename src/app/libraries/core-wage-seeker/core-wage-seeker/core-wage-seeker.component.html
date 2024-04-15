@@ -1,0 +1,16 @@
+<div class="core-wage-seeker-container">
+    <core-page-list [hideCheck]="true" [height]="800" [apiDefinition]="apiDefinition" [columns]="columns" [editRoute]="editRoute" [crud]="crud"
+        [title]="title" *ngIf="!!avatar" [outerParam$]="outerParam$"
+        [outerInOperators]="outerInOperators"
+        [outerFilterOperators]="outerFilterOperators" [autoResizeWithWindow]="true" [seekerMode]="true" (rowDoubleClick)="onRowDoubleClick($event)"></core-page-list>
+
+    <ng-template #orgTree>
+        <core-org-tree [(ngModel)]="orgIds"
+            (ngModelChange)="onOrgIdsChange($event)" [fullWidthMode]="false">
+        </core-org-tree>
+    </ng-template>
+
+    <ng-template #avatar let-avatar="context.avatar">
+        <img [src]="avatar || defaultAvatar" appImageErrorResolver>
+    </ng-template>
+</div>

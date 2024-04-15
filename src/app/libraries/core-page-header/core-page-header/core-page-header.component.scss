@@ -1,0 +1,65 @@
+.core-page-header-container {
+    height: var(--size-core-page-header-height); // FIXED OVERALL THE APP
+    background-color: white;
+    // display: flex;
+    & .title {
+        color: #000000;
+        font-weight: 400;
+        font-size: 20px;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+.d-flex-between {
+  height: var(--size-core-page-header-height);
+}
+.buttonGroupCustom{
+    overflow-x: scroll;
+    &::-webkit-scrollbar-thumb{
+        width: 20%!important;
+    }
+}
+.buttonGroupCustom:hover{
+    overflow-x: scroll;
+}
+
+  
+  .buttonGroupCustom::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    width: 50px!important;
+    border-radius: 10px;
+    transition: background-color 2s;
+  }
+  .buttonGroupCustom:hover::-webkit-scrollbar-thumb {
+    background-color: #a5a4a4;
+    width: 50px!important;
+    border-radius: 10px;
+    transition: background-color 2s;
+  }
+  
+//   .buttonGroupCustom::-webkit-scrollbar-track {
+//     margin-top: 5px;
+//     background-color: transparent;
+//     border-radius: 10px;
+//     width: 50px!important;
+//     transition: background-color 2s;
+    
+//   }
+//   .buttonGroupCustom:hover::-webkit-scrollbar-track {
+//     margin-top: 5px;
+//     background-color: #a5a4a4;
+//     border-radius: 10px;
+//     width: 50px!important;
+//     transition: background-color 2s;
+    
+//   }
+
+//   @keyframes scrollWidth {
+//     from {
+//       width: 50px;
+//     }
+//     to {
+//       width: 100px;
+//     }
+//   }

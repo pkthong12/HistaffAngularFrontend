@@ -1,0 +1,61 @@
+<div class="core-param-control-container">
+
+    <!-- START: LABEL SESSION-->
+    <label [class]="'control-label'" *ngIf="control.controlType==='CHECKBOX'">
+    </label>
+    <!-- ('UI.COMMON_FILTER' | translate: lang) + -->
+    <label *ngIf="control.name==='dateFrom'">
+        {{
+            
+            (control.label | translate: lang) +
+            ('UI.COMMON_FROM' | translate: lang)
+        }}
+    </label>
+
+    <label *ngIf="control.name==='dateTo'">
+         {{
+        'UI.COMMON_TO' | translate: lang
+        }}
+    </label> 
+    <label *ngIf="control.controlType=='DATEPICKER' && control.name!=='dateFrom' && control.name!=='dateTo'">
+        {{ control.label | translate: lang }}
+    </label>
+
+    <label *ngIf="control.controlType!=='CHECKBOX' && control.controlType!=='DATEPICKER'">
+        {{ control.label | translate: lang }}
+    </label>
+    <!-- START: LABEL SESSION-->
+
+    <!-- START: FORM-CONTROL SESSION-->
+    <ng-container *ngIf="control.controlType==='TEXTBOX'">
+        <input *ngIf="control.type==='date'" [(ngModel)]="control.ngModel" (ngModelChange)="control.ngModelChange(control.name, $event)" [type]="control.type" 
+        [disabled]="!!control.disabled!" class="form-control"
+            useValueAsDate>
+        <input *ngIf="control.type==='number'" [(ngModel)]="control.ngModel" (ngModelChange)="control.ngModelChange(control.name, $event)" [type]="control.type" 
+        [disabled]="!!control.disabled!" class="form-control"
+            [step]="control.step || '1'">
+        <input *ngIf="control.type!=='date' && control.type!=='number'" [(ngModel)]="control.ngModel" (ngModelChange)="control.ngModelChange(control.name, $event)"
+            [type]="control.type" [disabled]="!!control.disabled!"  class="form-control">
+    </ng-container>
+
+    <ng-container *ngIf="control.controlType==='CHECKBOX'">
+        <core-checkbox [(ngModel)]="control.ngModel" (ngModelChange)="control.ngModelChange(control.name, $event)" [text]="control.label"
+            [inputValue]="control.value" [disabled]="!!control.disabled!" ></core-checkbox>
+    </ng-container>
+
+    <ng-container *ngIf="control.controlType==='DATEPICKER'">
+        <core-date-picker [(ngModel)]="control.ngModel" [rangeLimit]="control.rangeLimit!" [enableTimeZoneConverter]="enableTimeZoneConverterForDateTimePeriodParameters"
+        (ngModelChange)="control.ngModelChange(control.name, $event)" [disabled]="!!control.disabled!" ></core-date-picker>
+    </ng-container>
+
+    <ng-container *ngIf="control.controlType==='DROPDOWN' && !!control.dropdownOptions$">
+        <core-dropdown [(ngModel)]="control.ngModel" [disabled]="!!control.disabled!"  (ngModelChange)="control.ngModelChange(control.name, $event)" [paramMode]="true" [options$]="control.dropdownOptions$!"></core-dropdown>
+    </ng-container>
+
+    <ng-container *ngIf="control.controlType==='CHECKLIST' && !!control.checklistOptions$">
+        <core-checklist [(ngModel)]="control.ngModel" [disabled]="!!control.disabled!"  (ngModelChange)="control.ngModelChange(control.name, $event)" [paramMode]="true" [options$]="control.checklistOptions$!"></core-checklist>
+    </ng-container>
+
+    <!-- END: FORM-CONTROL SESSION-->
+
+</div>

@@ -1,0 +1,6 @@
+<div class="core-button-vns-container d-flex d-flex-center" [appTooltip]="data.caption | translate: lang" (click)="!hidden ? onButtonClick() : null">
+    <div [ngClass]="data.styleClass" [class.disabled]="disabled" [class.temporary-unavailable]="!!hidden">
+        <i src="" [class]="data.iconClass" [class.temporary-unavailable]="!!hidden"></i>
+        <span [class.temporary-unavailable]="!!hidden" class="button-caption" *ngIf="showCaption || data.code == 'HEADER_GETSHIFTDEFAULT'">{{ data.caption | translate: lang }}</span>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+.app-online-users-container {
+
+    --z-index: 1;
+
+    display: block;
+    position: fixed;
+    width: 320px;
+    height: 500px;
+    top: 121px;
+    right: 25px;
+    padding: 25px;
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: var(--z-index);
+    box-shadow: var(--decoration-box-shadow);
+
+    .online-users-header {
+        display: block;
+        position: sticky;
+        top: 0;
+
+        &>i {
+            cursor: pointer;
+            float: right;
+            font-size: 24px;
+            transform: translate(20px, -20px);
+            color: darkgrey;
+        }
+    }
+
+    & img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    & li {
+        width: 270px;
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+        justify-content: space-between;
+
+        &>* {
+            display: block;
+            white-space: nowrap;
+        }
+
+        &>div {
+            position: relative;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+}

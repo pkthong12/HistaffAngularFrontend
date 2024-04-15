@@ -1,0 +1,191 @@
+<div #coreTable class="core-table-container" [class.hide-search]="!!!searchActive">
+    <div class="search-toggler d-flex-center pointer" (click)="toggleAllowSearch()" *ngIf="!!!searchSwitchDisabled">
+        <i class="feather-search"></i>
+    </div>
+
+    <!-- 
+        Cần truyền chính xác height của CoreTable
+        Tuy nhiên chiều cao của CoreTable cần được tính dựa vào chiều cao của các phần tử DOM lần lượt từ lớp ngoài vào lớp trong
+        Anh em chưa tính khi triển khai code, nên đang cần có con số default là 400px
+    -->
+    <table [class.wrap]="!!wrap" #table [ngStyle]="{ height: (height || 400) + 'px' }">
+        <colgroup>
+            <col *ngIf="showCheckbox">
+            <col *ngFor="let col of visibleColumns; let col_index = index">
+            <col *ngIf="showTools">
+        </colgroup>
+        <thead>
+            <tr #firstHeaderRow data-row="1" [ngStyle]="{
+                height: headerFirstRowHeight + 'px'
+            }">
+                <th class="check-col-header check-cell frozen-col" *ngIf="showCheckbox" 
+                    style="left: 0px"
+                    [attr.rowspan]="searchActive ? 2 : 1" [ngStyle]="{
+                        backgroundColor: '#666666',
+                        color: 'white'
+                    }">
+                    <!-- please do not change -->
+                    <div [ngStyle]="{
+                        width: checkboxSize * 2 + 'px'
+                    }">
+                        <label class="checkwrap" [ngStyle]="{
+                            height: searchActive ? headerFirstRowHeight + headerSecondRowHeight + 'px' : headerFirstRowHeight + 'px'
+                        }">
+                            <input type="checkbox" [id]="'check-col-header' + id" [(ngModel)]="headerCheckboxState"
+                                (ngModelChange)="toggleCheckAll($event)">
+                            <span class="checkmark" [class.mixed]="checkingState===2" [ngStyle]="{
+                                top: ((headerFirstRowHeight + headerSecondRowHeight * (searchActive ? 1 : 0)) /2 - checkboxSize/2) + 'px'
+                            }"></span>
+                        </label>
+                    </div>
+                </th>
+                <th *ngFor="let col of visibleColumns; let col_index = index" [class.frozen-col]="col_index < frozen"
+                    [style]="col_index < frozen ? 'left: ' + frozenLefts[col_index] + 'px' : ''" [ngStyle]="{
+                        backgroundColor: '#666666',
+                        color: 'white',
+                        padding: !!noPaddingCell ? '0px 0px' : '0px 12px'
+                    }">
+                    <!-- -1px for borderBottom of header first row -->
+                    <div class="column-caption" [class.ascending]="col.sortDirection===-1"
+                        [class.descending]="col.sortDirection===1" 
+                        (click)="onColumnCaptionClickLocal(col)" [appTooltip]="col.caption | translate : lang"
+                        [ngStyle]="{
+                            width: col.width + 'px',
+                            height: (headerFirstRowHeight - 1) + 'px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            whiteSpace: !!headerWrap ? 'initial' : 'inherit',
+                            textAlign: 'center'
+                        }"
+                        >{{
+                        col.caption | translate : lang }}</div>
+                    <div class="resizer" (mousedown)="startDragging($event, col, false)"
+                        (mouseup)="stopDragging($event, col, false)" (mousemove)="moveEvent($event, col)"></div>
+                </th>
+                <th class="check-col-header check-cell" *ngIf="showTools && visibleColumns.length" [ngStyle]="{
+                    backgroundColor: '#666666',
+                    color: 'white'
+                }">
+                    <div style="width: 100px;"></div>
+                </th>
+            </tr>
+            <tr *ngIf="searchActive" data-row="2" [class.hiden]="!!!searchActive">
+                <th *ngFor="let col of visibleColumns; let col_index = index" [class.frozen-col]="col_index < frozen"
+                    [style]="col_index < frozen ? 'left: ' + frozenLefts[col_index] + 'px' : ''" [ngStyle]="{
+                        backgroundColor: '#666666',
+                        color: 'white'
+                    }">
+                    <div [style]="'width: ' + col.width + 'px;'" *ngIf="!!!col.hideSearchBox">
+                        <input type="text" class="form-control search" [(ngModel)]="searchObject[col_index].searchFor"
+                            (ngModelChange)="onSearch($event, col_index)">
+                    </div>
+                </th>
+                <th [ngStyle]="{
+                    backgroundColor: '#666666',
+                    color: 'white'
+                }"></th>
+            </tr>
+        </thead>
+
+        <tbody [class.loading]="loading">
+            <core-loading-surface [loading]="loading" [height]="tbodyheight || 500"></core-loading-surface>
+
+            <ng-container>
+
+                    <tr [ngStyle]="{
+                        height: hiddenTopHeight + 'px'
+                    }" *ngIf="!!lazyLoading">
+                        <td>
+                            <div [ngStyle]="{
+                                height: hiddenTopHeight + 'px'
+                            }">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- old approach: let row of data -->
+                    <tr *ngFor="let row of visibleData; let row_index=index" (click)="onClickLocal(row, $event)"
+                        (touchend)="onRowTouchend(row_index+startNode)"
+                        [class.active]="row.id === activeRow && !!!disableHighlightOnClick">
+
+                        <!-- <div class="row-item-tools">
+                        <div class="row-item-tool">
+                            <div class="row-item-tool-wrapper">
+                                <core-button-group-vns [shownItems]="inlineToolItems"
+                                    (buttonClick)="onInlineToolClick($event, row)"></core-button-group-vns>
+                            </div>
+                        </div>
+                    </div> -->
+
+                        <td *ngIf="showCheckbox" class="check-cell frozen-col" style="left: 0px;">
+                            <label class="checkwrap">
+                                <input type="checkbox" class="check-row" [id]="'check-row' + (row_index + startNode)"
+                                    [(ngModel)]="checkingModel[row_index+startNode]" (ngModelChange)="onCheckingNgModelChange()">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td *ngFor="let col of visibleColumns; let col_index = index"
+                            [class.frozen-col]="col_index < frozen"
+                            [ngStyle]="{
+                                left: col_index < frozen ? frozenLefts[col_index] + 'px' : '0px',
+                                padding: !!noPaddingCell ? '0px 0px' : '2px 0px'
+                            }">
+
+                            <!-- IN MOST CASES WE NEED TO RENDER THE CELL WITH PRIMITIVE TYPE -->
+                            <div [class.scroll-y]="allowCellScrollY" [ngStyle]="{
+                                    width: !!col.width ? col.width + 'px' : 'unset',
+                                    textAlign: !!col.align ? col.align.toLowerCase() : 'unset',
+                                    lineHeight: rowHeight,
+                                    padding: !!noPaddingCell ? '0px 0px' : '0px 12px'
+                                }" *ngIf="!!!col?.templateRef" [appTooltip]="row[col.field] | tableCell: col.pipe : lang">{{
+                                            row[col.field] | tableCell: col.pipe : lang }}</div>
+                            <!------------------------------------------------------------------>
+
+                            <!-- BUT SOME TIME WE NEED TO RENDER THE CELL WITH TEMPLATE -->
+                            <div *ngIf="!!col?.templateRef" [ngStyle]="{
+                                        width: !!col.width ? col.width + 'px' : 'unset',
+                                        textAlign: !!col.align ? col.align.toLowerCase() : 'unset',
+                                        padding: !!noPaddingCell ? '0px 0px' : '0px 12px'
+                                    }">
+                                <ng-container *ngIf="!!!col?.templateRefAllowEditOnRowActived">
+                                    <ng-container
+                                        *ngTemplateOutlet="col?.templateRef!; context: { context: row }"></ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="!!col?.templateRefAllowEditOnRowActived">
+                                    <ng-container
+                                        *ngTemplateOutlet="col?.templateRef!; context: { context: row, allowEdit: row.id === activeRow }"></ng-container>
+                                </ng-container>
+                            </div>
+                            <!------------------------------------------------------------------>
+
+                        </td>
+                        <td *ngIf="showTools">
+                            <div class="tools-group d-flex-center">
+                                <div *ngFor="let tool of tools; let tool_index = index"
+                                    [class]="'tools-icon ' + tool.class"
+                                    [class.disabled]="tool.disabledFn ? tool.disabledFn!(row) : false"
+                                    [class.hidden]="tool.hiddenFn ? tool.hiddenFn!(row) : false"
+                                    (click)="onToolClickLocal(row_index+startNode, tool_index)"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr [ngStyle]="{
+                        height: hiddenBottomHeight + 'px'
+                    }" *ngIf="!!lazyLoading">
+                        <td>
+                            <div [ngStyle]="{
+                                height: hiddenBottomHeight + 'px'
+                            }">
+                            </div>
+                        </td>
+                    </tr>
+
+            </ng-container>
+
+        </tbody>
+        <tfoot *ngIf="!!footer">
+            Footer
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,8 @@
+﻿<div class="core-alert-container roboto-font" #container>
+    <div class="wrapper w-100">
+        <div *ngFor="let alert of alerts" class="{{cssClass(alert)}}">
+            <div [innerHTML]="alert.message"></div>
+            <button type="button" class="btn-close" (click)="removeAlert(alert)"></button>
+        </div>
+    </div>
+</div>

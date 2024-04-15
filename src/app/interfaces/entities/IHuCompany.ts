@@ -1,0 +1,37 @@
+export interface IHuCompany {
+  id: number;
+  nameVn: string;
+  nameEn?: string;
+  orgId: number;
+  gpkdAddress?: string;
+  regionId: number;
+  phoneNumber?: string;
+  workAddress?: string;
+  insUnit?: number;
+  provinceId?: number;
+  districtId?: number;
+  wardId?: number;
+  fileLogo?: string;
+  bankAccount?: string;
+  bankId?: number;
+  bankBranchId?: number;
+  fileHeader?: string;
+  pitCode?: string;
+  pitCodeChange?: string;
+  pitCodeDate?: Date;
+  fileFooter?: string;
+  representativeId?: number;
+  signId?: number;
+  pitCodePlace?: string;
+  gpkdNo?: string;
+  gpkdDate?: Date;
+  website?: string;
+  fax?: string;
+  note?: string;
+  isActive?: boolean;
+  bankBranch?: string;
+  createBy?: string;
+  updatedBy?: string;
+  createDate?: Date;
+  updatedDate?: Date;
+}

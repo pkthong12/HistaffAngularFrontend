@@ -1,0 +1,98 @@
+<div #container class="core-org-tree-container" [class.full-width]="!!fullWidthMode"
+    *ngIf="!!data" [ngStyle]="{
+        position : 'relative',
+        width: '100%',
+        height: height + 'px'
+    }">
+    <div #displayContent class="custom-org-tree">
+        <div class="core-org-tree-header d-flex-between">
+            <div class="m5">
+                <input type="text" class="form-control" [(ngModel)]="search"
+                    (ngModelChange)="onSearchChange($event)" [placeholder]="searchPlaceholder | translate: lang"
+                    [class.full-width]="!!fullWidthMode">
+            </div>
+        </div>
+
+        <ng-container>
+
+            <div class="scroll-container" [ngStyle]="{
+                height: height - layoutService.coreOrgTreeTopHeight - layoutService.coreOrgTreeBottomHeight + 'px',
+                overflow: 'scroll'
+                }">
+                <core-loading-surface [loading]="loading" [height]="scrollContainerHeight"></core-loading-surface>
+                <ul class="root" *ngFor="let root of data" [class.collapsed]="!!!root.tree$Expanded">
+                    <ng-container *ngTemplateOutlet="item; context: { context: root }"></ng-container>
+                </ul>
+            </div>
+
+
+            <div [ngStyle]="{
+                display: 'block',
+                position: 'absolute',
+                bottom: '0px',
+                left: '0px',
+                right: '0px',
+                height: layoutService.corePaginationHeight + 'px',
+                paddingLeft: layoutService.basicSpacing + 'px',
+                paddingRight: layoutService.basicSpacing + 'px',
+                lineHeight: layoutService.corePaginationHeight + 'px',
+                overflow: 'hidden'
+            }">
+                <div [ngStyle]="{
+                    height: layoutService.corePaginationHeight + 'px',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }">
+                    <div>
+                        <core-checkbox [(ngModel)]="showDissolved"
+                            (ngModelChange)="onCheckIncludeDissolvedChange($event)"
+                            [text]="'UI.CORE_ORG_TREE.SHOW_OUTDATED_UNITS_ABBREVIATED'"
+                            [tooltip]="'UI.CORE_ORG_TREE.SHOW_OUTDATED_UNITS'" tooltipPosition="above"></core-checkbox>
+                    </div>
+                    <div class="check-inheritance-wrapper" *ngIf="accessorMode === 'CHECKED'">
+                        <core-checkbox *ngIf="showCheckInheritance" [(ngModel)]="checkInheritance" (ngModelChange)="onCheckInheritanceChange($event)"
+                            [text]="'UI.CORE_ORG_TREE.CHECK_INHERITANCE'"></core-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #item let-context="context" let-id="context.id" let-title="context.tree$Title"
+                let-highlighted="context.tree$Highlighted" let-hasChildren="context.tree$HasChildren" let-hasActiveChildren="context.tree$HasActiveChildren"
+                let-children="context.tree$Children" let-expanded="context.tree$Expanded"
+                let-isActive="context.isActive"
+                let-active="context.tree$Active" let-checked="context.tree$Checked" let-protected="context.protected">
+
+                <li [class.has-children]="!!hasChildren" [class.collapsed]="!!hasChildren && !!!expanded"
+                    *ngIf="(!showDissolved && !!isActive) || (!!showDissolved)"
+                >
+                    <!-- (click)="accessorMode !== 'CHECKED' ? onObjectClick(context, $event) : $event.preventDefault()" -->
+                    <span
+                        (click)="onObjectClick(context, $event)">
+                        <i class="expand-toggler custom-icon-parent-down" *ngIf="(!!showDissolved && !!hasChildren) || (!showDissolved && !!hasActiveChildren)"
+                            (click)="onExpandTogglerClick(context, $event)"></i>
+                        <core-checkbox *ngIf="accessorMode === 'CHECKED' && !!!protected"
+                            (onClick)="onItemCheck(context, $event)" [inputValue]="checked"
+                            [disabled]="disabled"></core-checkbox>
+                        <object [class.active]="selectedKey===id.toString()" [class.highlighted]="highlighted"
+                            [class.dissolved]="!isActive"
+                            [class.protected]="protected" [appTooltip]="title">
+                            {{ title }}
+                        </object>
+                    </span>
+                    <ul *ngIf="children.length" [class.collapsed]=" !!!expanded">
+                        <ng-container *ngFor="let child of children">
+                            <ng-container *ngIf="!!expanded || !!fullRendering">
+                                <ng-container *ngTemplateOutlet="item; context: { context: child }"></ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ul>
+                </li>
+            </ng-template>
+
+        </ng-container>
+    </div>
+
+
+</div>

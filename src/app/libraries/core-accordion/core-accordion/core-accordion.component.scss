@@ -1,0 +1,137 @@
+.core-accordion-container {
+    --opacity: 1;
+    opacity: var(--opacity);
+    transition: opacity 1s ease-in;
+    --opened-item-overflow: 'hidden'; // thay đổi bằng code
+
+    & .d-opacity-0 {
+        opacity: 0 !important;
+        transition: .5s ease-in !important;
+    }
+
+    & .core-accordion-sector.open {
+        overflow: var(--opened-item-overflow) !important; // thay đổi bằng code
+    }
+
+    & .core-accordion-sector {
+        overflow: hidden !important; // mặc định là hidden khi ở trạng thái đóng
+        background-color: white;
+        padding: var(--size-layout-block-cell-spacing);
+        margin: 0px 0px var(--size-layout-block-cell-spacing) 0px;
+        border-radius: var(--decoration-block-border-radius);
+        border:1px solid #D1D1D1;
+    }
+
+    & .header-text {
+        font-weight: 400;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+
+    & .line-divider {
+        opacity: 1;
+        transform: translateY(10px);
+        transition: .5s ease-in;
+    }
+
+    & .hidden {
+        opacity: 0 !important;
+        transition: .5s ease-in;
+    }
+
+    & .sector-content {
+        overflow: hidden !important;
+        opacity: 0 !important;
+        transition: .5s ease-in;
+    }
+    & .sector-content.open {
+        overflow: var(--opened-item-overflow) !important; // thay đổi bằng code
+        opacity: 1 !important;
+    }
+
+    & .core-line-wrapper {
+        padding-top: var(--size-layout-block-cell-spacing);
+    }
+    & .required {
+        color: red;
+    }
+
+    & .icon-group {
+
+        &>* {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        & .d-transparent {
+            opacity: 0;
+            transition: opacity .5s ease-in;
+        }
+
+        & .icon-wrapper {
+            
+            width: 30px;
+            height: 30px;
+            opacity: 1;
+            transition: opacity .5s ease-in;
+
+            &:has(.edit) {
+                margin-right: 10px;
+                // border: solid 1px #A7A7A7;
+                &:hover{
+                    border-radius: 50%;
+                    background-color: #E7E7E7;
+                }
+            }
+
+            &:has(.toggler) {
+                border-radius: 50%;
+                background-color: #F1F1F1;
+                width: 33px;
+                height: 33px;
+            }
+        }
+        // & .icon-wrapper-2 {
+
+        // }
+
+        & .edit {
+            // background-color: white;
+        }
+
+        & .toggler {
+            font-size: 20px;
+            color: #A7A7A7;
+            transform: rotate(-90deg);
+            transition: .5s ease-in;
+        }
+
+    }
+
+    & .core-accordion-sector.open {
+            
+        & .toggler {
+            transform: rotate(0deg);
+            transition: .5s ease-in;
+        }
+
+        // & .sector-content {
+        //     overflow: visible;
+        //     opacity: 1;
+        //     transition: .5s ease-in-out;
+        // }
+    }
+
+}
+
+.custom-button-edit{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5389 2.00805C12.8642 1.68275 13.3054 1.5 13.7654 1.5C13.9932 1.5 14.2188 1.54487 14.4292 1.63204C14.6397 1.71921 14.8309 1.84698 14.992 2.00805C15.153 2.16912 15.2808 2.36034 15.368 2.57079C15.4551 2.78124 15.5 3.0068 15.5 3.23459C15.5 3.46238 15.4551 3.68794 15.368 3.89839C15.2808 4.10884 15.153 4.30006 14.992 4.46113L4.77078 14.6823L1.5 15.5L2.31769 12.2292L12.5389 2.00805Z" stroke="%23464646" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');    
+}

@@ -1,0 +1,49 @@
+<div #container class="core-month-picker-container">
+    <div class="input-wrapper" [ngStyle]="{ position: 'relative' }">
+        <input class="form-control" type="text" [ngStyle]="{ width: '100%' }" [ngModel]="textValue" readonly [class.form-control-disabled]="disabled" [disabled]="disabled"><label class="icon"
+            (click)="toggleOpen()"></label>
+    </div>
+
+    <div class="tl-month-picker-popup" [class.open]="openState">
+        <div [ngStyle]="{
+            display: !!yearPickerActive ? 'none' : 'block'
+        }">
+            <div class="tl-month-picker-emitter-header">
+                <div class="tl-month-picker-emitter-year" (click)="onYearClickLocal(year)">{{ year }}</div>
+                <div class="arrows">
+                    <div class="go-up" (click)="goUp()"></div>
+                    <div class="go-down" (click)="goDown()"></div>
+                </div>
+            </div>
+            <div class="months-container-wrapper">
+                <div #monthsContainer class="months-container zoom-in">
+                    <ul *ngFor="let row of months; let rowIndex=index">
+                        <li *ngFor="let month of row; let subMonthIndex=index"
+                            (click)="onClick(rowIndex, subMonthIndex)">
+                            <div
+                                [class.active]="year === monthObject$.value.year && rowIndex * 3 +  subMonthIndex === monthObject$.value!.monthIndex">
+                                {{ month }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-picker-session" [ngStyle]="{
+            display: !!yearPickerActive ? 'block' : 'none'
+        }">
+            <core-year-picker [lang]="lang" (onChange)="onYearPicked($event)"></core-year-picker>
+        </div>
+
+        <div class="cms-footer-wrapper">
+            <div class="cms-footer">
+                <div class="clear" [class.opacity-0]="!!!value" (click)="clear()">{{ 'UI.CORE_DATE_PICKER_CLEAR' | translate: lang }}</div>
+                <div class="digi-watch"></div>
+                <div class="this-month" (click)="goThisMonth()">{{ 'UI.CORE_DATE_PICKER_THIS_MONTH' | translate: lang }}</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

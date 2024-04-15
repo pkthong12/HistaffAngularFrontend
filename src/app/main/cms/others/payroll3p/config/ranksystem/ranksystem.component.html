@@ -1,0 +1,188 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-full">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Khác <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i>Lương 3P
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            Thiết lập
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/others/payroll3p/config3p/ranksystem'>Hệ thống thang bậc
+              lương</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-content">
+      <table class="table table-bordered table-ranksystem">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">STT</th>
+            <th scope="col" class="text-center">Hệ số</th>
+            <th scope="col" class="text-center">Lương</th>
+            <th scope="col" class="text-center" *ngFor="let item of lstKeys">{{item}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col" class="text-center"></th>
+            <th scope="col" class="text-center add-hover" (click)="ClickAdd('HE_SO',0)">+</th>
+            <th scope="col" class="text-center add-hover" (click)="ClickAdd('LUONG',0)">+</th>
+            <th scope="col" class="text-center add-hover" *ngFor="let item of lstKeys; let i = index" (click)="ClickAdd(item, i)">+</th>
+          </tr>
+          <tr *ngFor="let item of lstData">
+            <td scope="row" class="with-50">{{item.STT}}</td>
+            <td scope="row" class="with-100">{{item.HE_SO}}</td>
+            <td scope="row" class="text-right with-200">{{item.LUONG | number}} </td>
+            <td scope="row" *ngFor="let rank of item.lstRank" [style.background-color]="rank.bgColor"
+              [style.color]="rank.color" style="font-weight: bold;">{{rank.value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<modal-md id="modal-coefficient">
+  <div class="modal-md">
+    <div class="modal-header">
+      <div>
+        <p>Nguyên tăc dãn cách dòng</p>
+      </div>
+      <div>
+        <span class="pl-2" (click)="close()"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+    <div class="modal-content">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!--  -->
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Tên</label>
+                <input class="form-control" type="text" formControlName="name" [(ngModel)]="model.name" maxlength="51">
+                <span class="input-error"
+                  *ngIf="editForm.get('name')!.hasError('required') && !editForm.get('name')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <label class="e-float-text">Từ</label>
+                <input class="form-control" type="number" formControlName="from" [(ngModel)]="model.from">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <label class="e-float-text">Đến</label>
+                <input class="form-control" type="number" formControlName="to" [(ngModel)]="model.to">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group vertical">
+                <label class="e-float-text">Dãn cách (%)</label>
+                <input class="form-control" type="number" formControlName="mark" [(ngModel)]="model.mark">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='lstRule' rowHeight='37' headerHeight='42' height="375"
+        [enableHover]='true' [allowSorting]='true' allowResizing='true' [locale]='configs.currentLang'
+        [allowSelection]='true' [showColumnChooser]='true' [selectionSettings]='configs.selectionNonCheckSingle'
+        (rowSelecting)="SelectRecord($event!)" [allowFiltering]='true'>
+        <e-columns>
+          <!-- <e-column type='checkbox' [showInColumnChooser]='false'
+          [allowFiltering]='false' [allowSorting]='false' width='30'
+          textAlign="Center" [allowEditing]="false">
+        </e-column> -->
+          <e-column width="30" eaderTextAlign="Center" textAlign="Center" headerText="STT"
+            clipMode="EllipsisWithTooltip">
+            <ng-template #template let-data>
+              <span>{{ formatStt(data.index) }}</span>
+            </ng-template>
+          </e-column>
+          <e-column field='id' [showInColumnChooser]='false' [visible]='false' headerText='ID' [isPrimaryKey]='true'
+            [allowEditing]="false">
+          </e-column>
+          <!--  -->
+          <e-column field='name' headerTextAlign="Center" textAlign="Left" width='150' headerText="Tên"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <e-column field='mark' headerTextAlign="Center" textAlign="Center" width='100' headerText="Dãn cách (%)"
+            clipMode='EllipsisWithTooltip'></e-column>
+          <!--  -->
+        </e-columns>
+      </ejs-grid>
+    </div>
+    <div class="modal-footer">
+      <button (click)="Add()" *ngIf="flagState == 'view'">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Thêm</button>
+      <button (click)="Edit()" *ngIf="flagState == 'view'">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Sửa</button>
+      <button (click)="Confirm('ok','HE_SO')" *ngIf="flagState != 'view'">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Lưu</button>
+      <button class="btn-cancel" (click)="close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        Hủy</button>
+    </div>
+  </div>
+  <div class="modal-background"></div>
+</modal-md>
+
+<gohr-confirm-modal id="modal-basicSalary">
+  <div class="row full-width gohr-modal-header">
+    Thay đổi đơn giá cơ bản
+  </div>
+  <div class="row full-width gohr-modal-header">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group vertical">
+          <label class="e-float-text">Hệ số bắt đầu</label>
+          <ejs-numerictextbox name="coefficientStart" [(ngModel)]="unitPriceModel.coefficientStart">
+          </ejs-numerictextbox>
+        </div>
+      </div>
+        <div class="col-sm-6">
+          <div class="form-group vertical">
+            <label class="e-float-text">Đơn giá</label>
+            <ejs-numerictextbox format="N0" locale="en" name="price" [(ngModel)]="unitPriceModel.price">
+            </ejs-numerictextbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="Confirm('ok','LUONG')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="Confirm('cancel','LUONG')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+
+<gohr-confirm-modal id="modal-levelstart">
+  <div class="row full-width gohr-modal-header">
+    Thay đổi bậc bắt đầu
+  </div>
+  <div class="row full-width gohr-modal-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group vertical">
+          <ejs-numerictextbox name="levelStart" [(ngModel)]="lvlStartModel.levelStart">
+          </ejs-numerictextbox>
+        </div>
+      </div>
+      </div>
+    </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="Confirm('ok','LEVEL_START')">Đồng
+      ý</button>
+    <button class="btn btn-default" (click)="Confirm('cancel','LEVEL_START')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

@@ -1,0 +1,16 @@
+<core-page-header [title]="title"></core-page-header>
+<core-tabs [headers]="tabHeaders" [contents]="[tab1, tab2]" [height]="tabsHeight"></core-tabs>
+
+<ng-template #tab1>
+    <div [ngStyle]="{ paddingTop: layoutService.basicSpacing + 'px' }">
+        <core-table width="100%" [height]="tableHeight" [rowHeight]="'46px'" [wrap]="false" [columns]="tab1Columns"
+            [data]="tab1FilteredData" headerHeight="60px" [frozen]="0" (onSearching)="onTab1Searching($event)"
+            (onColumnCaptionClick)="onTab1ColumnCaptionClick($event)" [columnSearchDefaultOpen]="true"
+            [lazyLoading]="true"></core-table>
+    </div>
+</ng-template>
+
+
+<ng-template #tab2>
+    <h2>OK2</h2>
+</ng-template>

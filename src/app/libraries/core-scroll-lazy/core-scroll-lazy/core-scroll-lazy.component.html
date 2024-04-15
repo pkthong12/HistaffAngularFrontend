@@ -1,0 +1,25 @@
+<div class="core-scroll-lazy-container">
+    <div [ngStyle]="{ 
+        height: height + 'px', 
+        overflow: 'auto' 
+    }" #scrollContainer (scroll)="onScrollLoading($event)">
+        <div class="viewport" [ngStyle]="{ 
+            overflow: 'hidden', 
+            willChange: 'transform', 
+            height: totalHeight + 'px',
+            position: 'relative' 
+        }">
+            <ul [ngStyle]="{
+                    margin: 0,
+                    paddingLeft: '6px', 
+                    willChange: 'transform',
+                    transform: 'translateY(' + offsetY + 'px)' 
+                }">
+                <ng-container *ngFor="let item of visibleOptions; let index = index;">
+                    <ng-container *ngTemplateOutlet="itemTemplate; context: { context: item }"></ng-container>
+                </ng-container>
+            </ul>
+
+        </div>
+    </div>
+</div>

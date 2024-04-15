@@ -1,0 +1,125 @@
+<div #container class="core-tree-grid-container">
+
+    <div class="loading-surface" *ngIf="loading">
+        <div class="loading-wrapper">
+            <app-threedots></app-threedots>
+        </div>
+    </div>
+
+    <div class="tree-grid-header">
+        <div class="tree-block-header">
+            <div class="header-cell-div">
+                {{ 'UI.CORE_TREE_GRID.TREE_BLOCK_HEADER' | translate: lang }}
+                <core-button-group-vns [shownItems]="headerToolItems"
+                    (buttonClick)="onHeaderToolClick($event)"></core-button-group-vns>
+            </div>
+        </div>
+        <div *ngFor="let column of columns; let columnIndex=index" [class.hidden]="column.hidden" [ngStyle]="
+        {
+            width: !!column.width ? column.width + 'px' : 'unset',
+            textAlign: !!column.align ? column.align.toLowerCase() : 'unset'
+        }
+    ">
+            <div class="header-cell-div">
+                {{ column.caption | translate: lang }}
+            </div>
+        </div>
+    </div>
+
+    <div class="tree-grid-content" [class.edit-mode-activated]="editModeActivated">
+
+        <ul class="root" *ngFor="let root of data" [class.collapsed]="!!!root.tree$Expanded">
+            <ng-container *ngTemplateOutlet="item; context: { context: root }"></ng-container>
+        </ul>
+
+    </div>
+
+    <ng-template #item let-context="context" let-id="context.id" let-title="context.tree$Title"
+        let-highlighted="context.tree$Highlighted" let-hasChildren="context.tree$HasChildren"
+        let-children="context.tree$Children" let-expanded="context.tree$Expanded" let-active="context.tree$Active"
+        let-checked="context.tree$Checked" let-tier="context.tree$Tier">
+
+        <li [class.has-children]="!!hasChildren" [class.collapsed]="!!hasChildren && !!!expanded"
+            (click)="onRowClick(context, $event)">
+            <span [class.span-edit-mode-activated]="!!editModeActivated && pendingContext.id===id">
+                <div class="tree-item-tool">
+                    <div class="tree-item-tool-wrapper">
+                        <core-button-group-vns [shownItems]="toolItems" [showCaption]="false"
+                            (buttonClick)="onToolClick($event, context)"></core-button-group-vns>
+                    </div>
+                </div>
+                <div class="tree-item">
+                    <div class="tree-item-div" [attr.data-tier]="tier">
+                        <i class="expand-toggler feather-chevron-down" *ngIf="!!children.length"
+                            (click)="onExpandTogglerClick(context)"></i>
+                        <object (click)="onObjectClick(context, $event)">
+                            {{ title }}
+                        </object>
+                    </div>
+                </div>
+                <div class="tree-grid-row-wrapper">
+                    <div class="tree-grid-row">
+
+                        <ng-container *ngIf="!!!(!!editModeActivated && pendingContext?.id===id)">
+
+                            <div class="tree-grid-cell" *ngFor="let column of columns; let columnIndex=index"
+                                [class.hidden]="column.hidden">
+                                <div class="cell-div" [ngStyle]="
+                                {
+                                    width: !!column.width ? column.width + 'px' : 'unset',
+                                    overflow: 'hidden',
+                                    textAlign: !!column.align ? column.align.toLowerCase() : 'unset'
+                                }
+                            ">
+
+                                    {{ !!column.translate ? (context[column.field] | translate: lang | tableCell:
+                                    column.pipe : lang) :
+                                    context[column.field] | tableCell: column.pipe : lang}}
+
+
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="!!editModeActivated && pendingContext?.id===id">
+
+                            <div class="tree-grid-cell" *ngFor="let column of columns; let columnIndex=index"
+                                [class.hidden]="column.hidden">
+                                <div class="cell-div" [ngStyle]="
+                                {
+                                    width: !!column.width ? column.width + 'px' : 'unset',
+                                    display: 'table',
+                                    overflowY: 'visible',
+                                    textAlign: !!column.align ? column.align.toLowerCase() : 'unset'
+                                }
+                            ">
+                                    <ng-container *ngIf="!!!column.control">
+                                        {{ !!column.translate ? (context[column.field] | translate: lang | tableCell:
+                                        column.pipe : lang) :
+                                        context[column.field] | tableCell: column.pipe : lang}}
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!!column.control">
+                                        <core-control [form]="form" [control]="column.control!"
+                                            [checkError$]="checkError$"></core-control>
+                                    </ng-container>
+
+
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+                </div>
+            </span>
+            <ul *ngIf="children.length" [class.collapsed]=" !!!expanded">
+                <ng-container *ngFor="let child of children">
+                    <ng-container *ngTemplateOutlet="item; context: { context: child }"></ng-container>
+                </ng-container>
+            </ul>
+        </li>
+    </ng-template>
+
+</div>

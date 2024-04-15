@@ -1,0 +1,13 @@
+<div #container class="app-language-changer-container">
+    <div class="block d-flex d-flex-center" (click)="onBlockClick()">
+        <!-- <span>{{ currentLang | translate: lang }}</span> -->
+        <img [src]="this.currentLang == 'UI_LANGUAGE_CHANGER_MENU_VI' ? '../../../assets/icon/vietnam-lang.svg' : '../../../assets/icon/england-lang.svg'">
+    </div>
+    <div class="dropdown" [class.open]="expandState">
+        <ul>
+            <li *ngFor="let item of languages" (click)="onMenuItemClick(item)">
+                <span>{{ item.translateCode | translate: lang }}</span>
+            </li>
+        </ul>
+    </div>
+</div>

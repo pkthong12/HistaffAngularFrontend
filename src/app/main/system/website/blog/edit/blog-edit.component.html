@@ -1,0 +1,171 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Hệ thống <i
+              class="fa fa-angle-double-right" aria-hidden="true">Website</i>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/sys/website/blog'>Tin
+              tức</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <div class="main-toolbar">
+          <button id="add" class="btn-action" (click)="clickToolbar(itemButton)"
+            *ngFor="let itemButton of toolbar"
+            [disabled]="itemButton.isDisable === true">
+            <p class="text-center"><i
+                class="fa {{itemButton.prefixIcon}} {{itemButton.iconColorClass}}"></i>
+            </p>
+            <p class="text-center">{{itemButton.text}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="card-center">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info histaff-icon"></div>
+            <label class="title">Thông tin </label>
+          </div>
+          <!--  -->
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Danh mục tin</label>
+                <ejs-dropdownlist id='category_id' [dataSource]='lstCategory'
+                  formControlName="category_id" [showClearButton]="true"
+                  [(ngModel)]="model.category_id" [fields]='fields'
+                  [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstCategory)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('category_id')!.hasError('required') && !editForm.get('category_id')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Title</label>
+                <input class="form-control" type="text" formControlName="title"
+                  [(ngModel)]="model.title" maxlength="51">
+                <span class="input-error"
+                  *ngIf="editForm.get('title')!.hasError('required') && !editForm.get('title')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group vertical">
+                <label class="e-float-text ">Description</label>
+                <input class="form-control" type="text"
+                  formControlName="description" [(ngModel)]="model.description">
+                  <span class="input-error"
+                  *ngIf="editForm.get('description')!.hasError('required') && !editForm.get('description')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group vertical">
+                <label class="e-float-text ">Meta Description</label>
+                <input class="form-control" type="text"
+                  formControlName="meta_description"
+                  [(ngModel)]="model.meta_description">
+                  <span class="input-error"
+                  *ngIf="editForm.get('meta_description')!.hasError('required') && !editForm.get('meta_description')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text required" for="code">Create
+                  By</label>
+                <input class="form-control" type="text"
+                  formControlName="create_by" [(ngModel)]="model.create_by"
+                  maxlength="31">
+                <span class="input-error"
+                  *ngIf="editForm.get('create_by')!.hasError('required') && !editForm.get('create_by')!.untouched">
+                  Bắt buộc
+                </span>
+                <span class="input-error "
+                  *ngIf="editForm.get('create_by')!.hasError('incorrect') && !editForm.get('create_by')!.untouched">
+                  Sai định dạng
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group  vertical">
+                <label class="e-float-text ">Số thứ
+                  tự</label>
+                <ejs-numerictextbox format="N0" locale="en" name="orders"
+                  formControlName="orders" [(ngModel)]="model.orders" min="0"
+                  max="999999999">
+                </ejs-numerictextbox>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group vertical">
+                <label class="e-float-text ">tag</label>
+                <input class="form-control" type="text" formControlName="tag"
+                  [(ngModel)]="model.tag" maxlength="1000">
+                  <span class="input-error"
+                  *ngIf="editForm.get('tag')!.hasError('required') && !editForm.get('tag')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Ảnh thumbnail</label>
+                <input style="font-size: 13px;" #file type="file" id="avatar"
+                  accept="image/*" data-max-size="5120"
+                  [disabled]="flagState === 'view'"
+                  (change)="uploadAvatar(file.files!)" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div id="target"
+                onclick="javascript:document.getElementById('avatar').click();">
+                <img *ngIf="!model.img" src="/assets/images/no-img.png"
+                  class="img-avatar" />
+                <img *ngIf="model.img" [src]='model.img' class="img-avatar" />
+              </div>
+            </div>
+            <div class="col-sm-12 pt-3">
+              <input #file2 type="file" id="uploadImg" style="display:none"
+                accept="image/*" data-max-size="5120"
+                (change)="uploadImg(file2.files!)" />
+              <ejs-richtexteditor #rteTool [toolbarSettings]='tools'
+                [quickToolbarSettings]='quickTools' formControlName="ckeditor"
+                (imageSelected)="imageSelected($event!)" height="960px">
+              </ejs-richtexteditor>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<gohr-confirm-modal id="confirm-back-modal">
+  <div class="row full-width gohr-modal-header">
+    Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>

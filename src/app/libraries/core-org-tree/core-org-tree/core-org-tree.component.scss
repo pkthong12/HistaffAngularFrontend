@@ -1,0 +1,317 @@
+/* 
+    Modify existing css properties of a complicated object like tree is a HARD-WORK!
+    Please do not modify this file if you do not understand it properly. Thank you.
+*/
+
+.core-org-tree-container {
+
+    --background: var(--color-bg-core-org-tree);
+    --height: 545px; // to be recalculated
+    // border-bottom-left-radius: 10px;
+    // border-bottom-right-radius: 10px;
+    border-radius: 5px;
+    --item-height: 35px;
+    --ul-padding: 20px;
+    --display: "block";
+    --square-color: darkgray;
+    --square-size: 9px;
+    --line-color: "transparent";
+    --active-item-color: #F37540;
+    --line-size: 1px;
+    --reduced-icon-wrapper-height: 50px; // to be recalculated
+    --reduced-panel-height: calc(var(--height) - var(--reduced-icon-wrapper-height)); // to be refactored
+    --scroll-container-height: calc(var(--height) - var(--size-core-reducer-icon-wrapper-height) - var(--size-pagination-height)); // standard
+
+    color: black;
+    background-color: var(--color-bg-core-org-tree) !important;
+
+    @keyframes reducedPanelOn {
+        from {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        to {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+    }
+
+    height: var(--height);
+    background: var(--background);
+    width: var(--size-core-org-tree-width);
+    // padding: var(--size-layout-block-cell-spacing);
+    transition: width 0.5s ease-out;
+
+    & .custom-org-tree {
+        display: var(--display);
+    }
+    
+
+    .core-org-tree-header {
+        height: var(--size-core-org-tree-header-height);
+
+        & input {
+            width: calc(var(--size-core-org-tree-width) - var(--size-layout-block-cell-spacing) * 2 - var(--size-scrollbar-width) + 6px);
+            border-radius: 20px;
+            transform: translate(14px,8px)
+        }
+
+        & input.full-width {
+            width: calc(var(--size-core-org-tree-width) - var(--size-layout-block-cell-spacing) * 2);
+        }
+    }
+
+    .check-inheritance-wrapper {
+        padding: 15px;
+    }
+    .m5>input{
+        background:#E7E7E7
+    }
+    .form-control {
+        border:none;
+    }
+
+    .core-reducer-icon-wrapper {
+        height: var(--size-core-reducer-icon-wrapper-height);
+        padding: var(--size-layout-block-cell-spacing);
+    }
+
+    .scroll-container {
+
+        background: var(--background);
+        height: var(--scroll-container-height);
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
+        border-radius: 5px;
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        & ul {
+            display: table;
+            //border: dashed 1px darkgray; // for developing
+            vertical-align: top;
+            padding-left: var(--ul-padding);
+            transition: all .5s ease-out;
+            width: 100%;
+            &>li>span:hover {
+                
+                height: 35px;
+                background-color: white;
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+                width: 100%;
+            }
+            &>li>span:active{
+                background-color: #F1F1F1;
+                height: 35px;
+                border-radius: 20px;
+            }
+
+            &>li>span>object.active {
+                color: var(--active-item-color);
+            }
+
+            & .highlighted {
+                color: var(--color-core-org-tree-highlighted);
+                font-weight: 700;
+            }
+
+            & .dissolved {
+                color: #848484;
+                text-decoration: line-through dashed;
+            }
+
+            & .dissolved {
+                color: #848484;
+                text-decoration: line-through dashed;
+            }
+
+            & .dissolved.active {
+                color: #C9252B !important;
+            }
+
+            &>li {
+                display: block;
+                position: relative;
+
+                // The curremt item is starting its vertical children line
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: var(--ul-padding);
+                    left: calc(var(--ul-padding) * -1);
+                    top: calc(var(--item-height) / 2);
+                    height: calc(var(--item-height) / 2);
+                    border-top: solid var(--line-size) var(--line-color);
+                    border-right: none;
+                    border-bottom: none;
+                    border-left: solid var(--line-size) var(--line-color); // if current item has child/children
+                    z-index: 0;
+                }
+
+                &>span {
+                    display: flex;
+                    align-items: center;
+                    height: var(--item-height);
+                    white-space: nowrap;
+                    //border: solid 1px hsl(0, 20%, 80%); // for developing
+                    font-size: 13px;
+                    padding-left: 8px;
+                    transform: translateX(10px);
+                    cursor: pointer;
+
+                    &>i {
+                        color: var(--square-color);
+                        cursor: pointer;
+                        font-size: var(--square-size);
+                        width: var(--square-size);
+                        height: var(--square-size);
+                    }
+
+                    &>.expand-toggler {
+                        position: absolute;
+                        top: 12px;
+                        left: -5px;
+                        z-index: 1;
+                        transform: translateX(-100%) rotate(0deg);
+                        transition: 0.5s ease-out;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    &>.check-toggler {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                    }
+                }
+
+                // li {}
+                // connect itself to parrent 
+                
+                &>ul>li>span::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: var(--ul-padding);
+                    left: calc(var(--ul-padding) * -2);
+                    top: calc(var(--item-height) / 2);
+                    height: var(--line-size);
+                    border-top: solid var(--line-size) var(--line-color);
+                    z-index: 0;
+                }
+            }
+
+            &>li.collapsed {
+
+                &>span>.expand-toggler {
+                    transform: translateX(-100%) rotate(-90deg);
+                    transition: 0.5s ease-out;
+                }
+
+                &::before {
+                    border-left: none;
+                }
+            }
+
+            &>li:not(.collapsed):not(.has-children) {
+                &::before {
+                    border-left: none;
+                }
+            }
+
+            // help its parrent to continue children line
+            &:not(.root)::before {
+                content: "";
+                display: block;
+                position: absolute;
+                width: var(--line-size);
+                left: calc(var(--ul-padding) * -1);
+                height: calc(100% - var(--item-height) * 1.5);
+                border-left: solid var(--line-size) var(--line-color);
+                z-index: 0;
+            }
+
+                // Exception
+                // Clear extra part of vertical line
+                // when current ul has the last nested ul expanded
+            &:not(.root) {
+
+
+                    // When the last li item of some ul is expanded and has child/children
+                    // Then we use ::after (because ::before is occupired for other task)
+                    // to clear the tail part of the ul children line
+                &>li:last-child:not(.collapsed).has-children::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    height: calc(100% - var(--item-height));
+                    width: calc(var(--ul-padding) / 2);
+                    left: calc(var(--ul-padding) * -2);
+                    top: calc(var(--item-height) / 2);
+                    border-left: solid var(--line-size) var(--background);
+                    z-index: 0;
+                }
+
+            }
+
+        }
+
+        & ul.collapsed {
+            &:not(.root) {
+                display: none;
+            }
+        }
+    }
+
+    .collapsed>li::before {
+        display: none !important;
+    }
+
+}
+
+.core-org-tree-container.full-width {
+    // width: auto;
+
+    & .scroll-container {
+        width: auto;
+    }
+}
+
+.core-org-tree-container.reduced {
+    width: 50px;
+    padding: 0;
+    transition: width 0.5s ease-out;
+
+    & .scroll-container {
+
+        overflow: hidden;
+
+        &>ul.root {
+            display: none;
+        }
+
+        &>.reduced-panel {
+            color: var(--active-item-color);
+            width: 50px;
+            height: var(--reduced-panel-height);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            animation: reducedPanelOn 0.5s ease-out;
+
+            &>span {}
+        }
+    }
+
+}

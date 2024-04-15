@@ -1,0 +1,117 @@
+<div class="app-main-content">
+  <div class="app-container">
+    <!-- toolbar -->
+    <div class="app-toolbar">
+      <div class="card-center">
+        <!-- breadcrum-->
+        <div class="app-breadcrum">
+          <div class="brackcrum">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>Truyền thông
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <span class="brackcrum-active" href='/cms/media/internalblog'>Tin
+              tức nội bộ</span>
+          </div>
+        </div>
+        <!-- toolbar -->
+        <app-common-tools name="internalblogedit" [items$]="toolItems$" (toolItemClicked)="clickToolbar($event)"></app-common-tools>
+      </div>
+    </div>
+    <!--main-content -->
+    <div class="app-content">
+      <form name="editForm" [formGroup]="editForm" novalidate>
+        <div class="group-box">
+          <!-- title -->
+          <div class="card-head">
+            <div class="icon-info histaff-icon"></div>
+            <label class="title">Thông tin </label>
+          </div>
+          <!--  -->
+          <div class="row">
+            <!-- <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Danh mục tin</label>
+                <ejs-dropdownlist id='category_id' [dataSource]='lstCategory'
+                  formControlName="category_id" [showClearButton]="true"
+                  [(ngModel)]="model.category_id" [fields]='fields'
+                  [allowFiltering]='true'
+                  (filtering)='onFiltering($event,lstCategory)'>
+                </ejs-dropdownlist>
+                <span class="input-error"
+                  *ngIf="editForm.get('category_id')!.hasError('required') && !editForm.get('category_id')!.untouched">
+                  Bắt buộc
+                </span>
+              </div>
+            </div> -->
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text required">Chủ đề</label>
+                <input class="form-control" type="text" formControlName="title" [(ngModel)]="model.title"
+                  maxlength="100">
+                <span class="input-error"
+                  *ngIf="editForm.get('title')!.hasError('required') && !editForm.get('title')!.untouched">
+                  Bắt buộc nhập
+                </span>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group vertical">
+                <label class="e-float-text ">Mô tả</label>
+                <input class="form-control" type="text" formControlName="description" [(ngModel)]="model.description">
+              </div>
+            </div>
+            <div class="col-sm-6 row">
+              <div class="col-sm-8" id="backgroundTitle"
+                style=" background-size: 100%;background-repeat: no-repeat;border-radius: 10px;">
+                <img src="{{linkImgChange}}" width="30px" (click)="ChangeIcon()" style="cursor: pointer;">
+                <span *ngFor="let item of lstTheme">
+                  <img src="{{item.imgUrl}}" class="theme" (click)="ChangeTheme(item)" *ngIf="flagTheme">
+                </span>
+                <img src="/assets/images/them/menu.jpg" class="theme" (click)="ManyTheme()" *ngIf="flagTheme">
+
+                <div class="preview" id="textPreview" style="height: 150px;text-align: center;">
+                  <p *ngIf="model.title == null">Tiêu đề của tin tức</p>
+                  <p *ngIf="model.title">{{model.title}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 pt-3">
+              <div class="form-group vertical">
+                <label class="e-float-text ">Nội dung</label>               
+                <ckeditor [(ngModel)]="model.content" name="myckeditor" required formControlName="content"
+                  debounce="500" editorUrl="../../../../../../../assets/ckeditor/ckeditor.js">
+                </ckeditor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM BACK MODAL-->
+<gohr-confirm-modal id="confirm-back-modal">
+  <div class="row full-width gohr-modal-header">
+    Những thay đổi hiện tại sẽ bị mất. Bạn có thực sự muốn tiếp tục?
+  </div>
+  <div class="row full-width gohr-modal-footer text-center">
+    <button class="btn btn-primary" (click)="confirmBack('ok')">Đồng ý</button>
+    <button class="btn btn-default" (click)="confirmBack('cancel')">Hủy</button>
+  </div>
+</gohr-confirm-modal>
+
+<!-- CONFIRM BACK MODAL-->
+<gohr-confirm-modal id="many-theme">
+  <div class="row full-width gohr-modal-header">
+    Chọn phông nền
+  </div>
+  <div class="row">
+    <div class="col-sm-3" *ngFor="let item of lstThemeOrigin" style="padding: 10px;">
+      <img src="{{item.imgUrl}}" alt="" width="210px" height="112px" style="cursor: pointer;"
+        (click)="ChangeTheme(item)">
+    </div>
+  </div>
+
+</gohr-confirm-modal>

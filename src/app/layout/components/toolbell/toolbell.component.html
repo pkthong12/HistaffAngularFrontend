@@ -1,0 +1,24 @@
+<div (click)="showAccodion()" class="bell-group">
+  <div class="bell-icon">
+    <i class="fa fa-bell-o"></i>
+  </div>
+  <div class="notification-amount">
+    <span>{{total}}</span>
+  </div>
+</div>
+<div class="accordion" [style.opacity]="hidden ? '0' : '1'"
+  [style.visibility]="hidden ? 'hidden' : 'visible'">
+  <div class="title"><h4>Thông báo</h4></div>
+  <div *ngFor="let item of data ; let a = index">
+    <div (click)="toggle(a)" class="header" *ngIf="item.count > 0">
+      <div>{{item.name}} ({{item.count}})</div>
+      <div [@rotatedState]="item.state"><i class="fa fa-angle-down"
+          aria-hidden="true"></i></div>
+    </div>
+    <div [@myfirstanimation]='item.state' class="content" *ngIf="item.count > 0">
+      <div class="item" *ngFor="let i of item.value" >
+        <div class="emp"><a (click)="Directional(item.code, i)" class="link">{{i.name}} - {{i.code}}</a></div>
+      </div>
+    </div>
+  </div>
+</div>

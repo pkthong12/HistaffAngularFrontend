@@ -1,0 +1,87 @@
+cms-app-salarysample {
+ .table{
+     th{
+         vertical-align: inherit;
+         text-align: center;
+     }
+     .addRecord{
+         color: blue;
+     }
+     .addRecord:hover{
+        cursor: pointer;
+    }
+ }
+
+}
+#add-scale{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-scale{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#add-rank{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-rank{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#add-level{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
+#edit-level{
+    .gohr-modal
+    .gohr-modal-body {
+        margin: 16% 30%;
+        .e-float-text {
+            text-align: left;
+        }
+        .form-control {
+            height: calc(1.5em + .75rem + 2px) !important;
+        }
+    }
+}
