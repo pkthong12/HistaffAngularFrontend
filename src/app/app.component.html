@@ -1,9 +1,0 @@
-<app-layout *ngIf="!!authenticated && !initializing"></app-layout>
-<app-login *ngIf="!authenticated && !ssoPendingAuthDataExist"></app-login>
-<app-fullscreen-modal-loader *ngIf="initializing || (appConfigService.SAML2ADFS_ENABLED && ssoProcessing)" [content]="animatedText"></app-fullscreen-modal-loader>
-
-<ng-template #animatedText>
-    <app-threedots></app-threedots>
-</ng-template>
-
-<core-alert></core-alert>

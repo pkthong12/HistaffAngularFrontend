@@ -1,9 +1,0 @@
-<div class="core-page-header-container" #container>
-    <div class="d-flex-between pd-25">
-        <div class="title">{{ title | translate: lang }}</div>
-        <core-button-group-vns 
-            [instanceNumber]="instanceNumber"
-            [forHeader]="true"
-            (buttonClick)="onButtonClick($event)" *ngIf="!!!hideButtonGroup"></core-button-group-vns>
-    </div>
-</div>
